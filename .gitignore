@@ -37,7 +37,10 @@ ehthumbs.db
 Desktop.ini
 *.zip
 3252ed38076d1de9d8a5c9976ad56efd.jpg
-cursor/
+cursor/*
+!cursor/cursor.png
+!cursor/pointer.png
+!cursor/pointer.cur
 
 # Environment variables & secrets
 .env
