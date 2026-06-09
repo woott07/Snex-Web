@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNAX | Documentation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-container">
+                <img src="3252ed38076d1de9d8a5c9976ad56efd.jpg" alt="Snax Logo" class="logo-img">
+                <span class="logo">SNAX</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="docs.html">Documentation</a></li>
+                <li><a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="nav-btn">Add to Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <img src="3252ed38076d1de9d8a5c9976ad56efd.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h1 class="load-reveal-2">Documentation</h1>
+            <p class="load-reveal-3">Comprehensive guide to Snax commands and role-based permissions.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn-primary load-pop">
+                Add to Server
+            </a>
+        </div>
+    </header>
+
+    <div class="content-container" style="margin-top: 2rem;">
+        <p class="reveal">Welcome to the official Snax documentation. Below is the comprehensive list of every command available, categorized by permission groups.</p>
+        <p class="reveal"><strong>Note:</strong> The default prefix is <code>$</code>. This can be changed per-server by an Admin.</p>
+
+        <div class="command-category reveal">
+            <h2>Music & Default Utilities</h2>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$play &lt;song/url&gt;</div>
+                <div class="cmd-desc">Plays a track from YouTube or adds it to the queue.</div>
+            </div>
+            <div class="cmd-item"><div class="cmd-syntax">$skip</div><div class="cmd-desc">Skips the current track.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$prev</div><div class="cmd-desc">Plays the previous track in the queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$queue</div><div class="cmd-desc">Displays the current music queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$nowplaying</div><div class="cmd-desc">Displays the currently playing track.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$volume &lt;0-100&gt;</div><div class="cmd-desc">Adjusts the playback volume.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$pause / $resume</div><div class="cmd-desc">Pauses or resumes playback.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$remove &lt;number&gt;</div><div class="cmd-desc">Removes a specific track from the queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$clear</div><div class="cmd-desc">Clears the entire music queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$shuffle</div><div class="cmd-desc">Shuffles the current queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$loop</div><div class="cmd-desc">Toggles loop mode for the current track or queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$autoplay</div><div class="cmd-desc">Toggles automatic playback of recommended songs.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$stop</div><div class="cmd-desc">Stops playback and clears the queue.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$join / $leave</div><div class="cmd-desc">Forces the bot to join or leave your voice channel.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$ping</div><div class="cmd-desc">Checks bot latency and API response time.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$help</div><div class="cmd-desc">Displays the interactive help menu.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$hello</div><div class="cmd-desc">Bot says hello!</div></div>
+        </div>
+
+        <div class="command-category reveal">
+            <h2>VoiceExe Permissions</h2>
+            <div class="cmd-item"><div class="cmd-syntax">$mute / $unmute @user</div><div class="cmd-desc">Server mutes or unmutes a user.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$deafen / $undeafen @user</div><div class="cmd-desc">Server deafens or undeafens a user.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$dragreq @user</div><div class="cmd-desc">Sends an interactive request to pull a user to your channel.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$addme</div><div class="cmd-desc">Request to be added to a locked voice channel.</div></div>
+        </div>
+
+        <div class="command-category reveal">
+            <h2>ChatExe Permissions</h2>
+            <div class="cmd-item"><div class="cmd-syntax">$purge &lt;1-100&gt;</div><div class="cmd-desc">Bulk deletes messages in the current text channel.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$timeout @user &lt;minutes&gt; &lt;reason&gt;</div><div class="cmd-desc">Applies a Discord timeout to a user. Reason is strictly required.</div></div>
+        </div>
+
+        <div class="command-category reveal">
+            <h2>ManagerExe Permissions</h2>
+            <div class="cmd-item"><div class="cmd-syntax">$kick @user</div><div class="cmd-desc">Kicks a user. Interactive confirmation required. Cannot target equal/higher roles.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$ban / $unban @user</div><div class="cmd-desc">Bans or unbans a user. Interactive confirmation required.</div></div>
+        </div>
+
+        <div class="command-category reveal">
+            <h2>AdminExe Permissions</h2>
+            <div class="cmd-item"><div class="cmd-syntax">$AdminExe / $remAdminExe @target</div><div class="cmd-desc">Assigns or revokes Admin powers (10-minute cooldown queue applies).</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$ManagerExe / $remManagerExe @target</div><div class="cmd-desc">Assigns or revokes Manager powers.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$ChatExe / $remChatExe @target</div><div class="cmd-desc">Assigns or revokes ChatExe powers.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$VoiceExe / $remVoiceExe @target</div><div class="cmd-desc">Assigns or revokes VoiceExe powers.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$setNickExe / $remNickExe @target</div><div class="cmd-desc">Assigns or revokes Nickname management powers.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$assign_default / $default_remove @target</div><div class="cmd-desc">Overrides default group access.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$BypassExe / $remBypassExe @target</div><div class="cmd-desc">Grants extended spam limits to a user or role.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$SupBypass / $remSupBypass @target</div><div class="cmd-desc">Grants total immunity from the anti-spam filter.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$setprefix &lt;newprefix&gt;</div><div class="cmd-desc">Sets a custom prefix for the server.</div></div>
+            <div class="cmd-item"><div class="cmd-syntax">$remprefix</div><div class="cmd-desc">Removes the custom prefix, reverting to the default.</div></div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="3252ed38076d1de9d8a5c9976ad56efd.jpg" alt="Snax Logo" class="logo-img">
+                <h2>SNAX</h2>
+            </div>
+            <div class="footer-links">
+                <a href="docs.html">Documentation</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
