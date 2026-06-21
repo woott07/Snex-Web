@@ -271,7 +271,7 @@
                 <p>Snax is a highly modular, multi-purpose Discord bot built with <strong>discord.js v14</strong>. It combines a full-featured music player powered by <strong>Lavalink</strong>, a rich role-based permission system, server moderation tools, voice management utilities, and smart anti-spam protection — all in one lightweight, easy-to-extend package.</p>
                 <div class="info-box">
                     <p><strong>Invite Link:</strong> <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank">Add to Discord</a></p>
-                    <p><strong>Default Prefix:</strong> <code>$</code> — customizable per-server with <code>$setprefix</code>, or reset with <code>$remprefix</code>. You can also trigger commands by @mentioning the bot.</p>
+                    <p><strong>Default Prefix:</strong> <code>$</code> — customizable per-server with <code>$setprefix</code>, or reset with <code>$remprefix</code>. You can trigger commands by @mentioning the bot, using the prefix, or via slash (/) commands for all music features.</p>
                 </div>
             </section>
 
@@ -283,7 +283,8 @@
 │                               handlers, Lavalink music player, and logs in.
 ├── config/
 │   ├── config.json           — Main runtime configuration (prefix, volume, etc.)
-│   └── config.js             — Loader that merges .env with config.json
+│   ├── config.js             — Loader that merges .env with config.json
+│   └── slashOptionsMap.js    — Slash command options config for music commands
 ├── commands/                 — All non-music prefix commands (39 files)
 ├── lavalink_music/           — Lavalink music integration using Kazagumo/Shoukaku
 │   ├── player.js             — Initialises Kazagumo player, registers Lavalink
@@ -301,7 +302,8 @@
 │   ├── antiSpam.js           — Rolling-window spam detection & auto-timeout
 │   ├── serverLogger.js       — Creates/writes to the private snax-log channel
 │   ├── logger.js             — Terminal logger (success/warn/error)
-│   └── voiceCheck.js         — Voice-channel presence validation helper
+│   ├── voiceCheck.js         — Voice-channel presence validation helper
+│   └── slashDeploy.js        — Deploys slash commands to Discord globally
 ├── data/
 │   └── permissions.json      — Auto-generated guild permission database (JSON)
 ├── install.bat               — One-click Windows installer
@@ -419,11 +421,11 @@ LAVALINK_SECURE=true</code></pre>
                         <tr><td>VoiceExe</td><td>mute, unmute, deafen, undeafen, dragreq, addme</td></tr>
                         <tr><td>setNickExe</td><td>setnick</td></tr>
                         <tr><td>ChatExe</td><td>purge, timeout</td></tr>
-                        <tr><td>ManagerExe</td><td>ban, unban, kick — plus can assign: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove</td></tr>
-                        <tr><td>AdminExe</td><td>All of the above, plus all admin/assignment commands (VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass) and prefix management (setprefix, remprefix)</td></tr>
+                        <tr><td>ManagerExe</td><td>ban, unban, kick (ManagerExe users can also assign: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove)</td></tr>
+                        <tr><td>AdminExe</td><td>All of the above PLUS all admin/assignment commands: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass, setprefix, remprefix</td></tr>
                         <tr><td>BypassExe</td><td>Anti-spam extended limit (15 warns / 20 timeout, vs 4/7 default)</td></tr>
-                        <tr><td>SupBypass</td><td>Total anti-spam immunity — no warnings or timeouts ever applied</td></tr>
-                        <tr><td>OwnerOnly</td><td>Commands not in any group — Server Owner and Bot Owner only</td></tr>
+                        <tr><td>SupBypass</td><td>Total anti-spam immunity (no warnings or timeouts ever applied)</td></tr>
+                        <tr><td>OwnerOnly</td><td>Commands not in any group — only Server/Bot Owners can use them.</td></tr>
                     </tbody>
                 </table>
 
@@ -535,7 +537,7 @@ LAVALINK_SECURE=true</code></pre>
                     <thead><tr><th>Event</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td>messageCreate</td><td>Main command dispatcher. Handles prefix/mention triggers, anti-spam checks, permission validation, and command execution.</td></tr>
-                        <tr><td>interactionCreate</td><td>Handles component interactions (buttons, dropdowns, modals). Routes to the appropriate handlers based on customId.</td></tr>
+                        <tr><td>interactionCreate</td><td>Handles slash (/) commands (for music) and component interactions (buttons, dropdowns, modals). Routes to the appropriate handlers based on customId.</td></tr>
                         <tr><td>guildCreate</td><td>Creates the private snax-log channel upon joining a server.</td></tr>
                         <tr><td>ready</td><td>Runs on login. Fetches client application owner info.</td></tr>
                     </tbody>
@@ -546,7 +548,7 @@ LAVALINK_SECURE=true</code></pre>
                     <thead><tr><th>Event</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td>playerStart</td><td>Fires when a new track begins playback. Sends the main queue controller embed and action buttons.</td></tr>
-                        <tr><td>playerEmpty</td><td>Fires when the queue ends; handles empty queue channel alerts and disconnects after cooldown.</td></tr>
+                        <tr><td>playerEmpty</td><td>Fires when the queue ends; handles empty queue channel alerts.</td></tr>
                         <tr><td>error</td><td>Logs Lavalink player and connection errors.</td></tr>
                     </tbody>
                 </table>
@@ -579,7 +581,10 @@ LAVALINK_SECURE=true</code></pre>
                 <p>Custom terminal logger with color codes (success/warn/error).</p>
 
                 <h3>utils/voiceCheck.js</h3>
-                <p>Checks voice channel presence validation before music commands run.</p>
+                <p>Checks if user and bot are in voice channels together before music playback.</p>
+
+                <h3>utils/slashDeploy.js</h3>
+                <p><code>deploySlashCommands(client)</code>: Dynamically registers the 13 music commands as slash commands globally.</p>
             </section>
 
             <!-- Adding Commands -->
