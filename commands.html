@@ -76,8 +76,8 @@
                 <div class="cmd-desc">Go back and replay the previously played track.</div>
             </div>
             <div class="cmd-item">
-                <div class="cmd-syntax">$remove &lt;song name&gt;</div>
-                <div class="cmd-desc">Remove a specific song from the queue by name (case-insensitive, partial match supported). Removes the first matching entry.</div>
+                <div class="cmd-syntax">$remove &lt;song name or number&gt;</div>
+                <div class="cmd-desc">Remove a specific song from the queue by its number (e.g. <code>$remove 2</code>) or name (case-insensitive, partial match supported).</div>
             </div>
             <div class="cmd-item">
                 <div class="cmd-syntax">$clear</div>
@@ -89,7 +89,11 @@
             </div>
             <div class="cmd-item">
                 <div class="cmd-syntax">$loop <span class="cmd-alias">(alias: repeat)</span></div>
-                <div class="cmd-desc">Cycle through loop modes: Track → loops the current song. Queue → loops the entire queue. Off → disables looping.</div>
+                <div class="cmd-desc">Toggles loop mode for the current track.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$loopQ <span class="cmd-alias">(aliases: loopqueue, lq)</span></div>
+                <div class="cmd-desc">Toggles loop mode for the entire queue.</div>
             </div>
             <div class="cmd-item">
                 <div class="cmd-syntax">$autoplay <span class="cmd-alias">(alias: ap)</span></div>
@@ -165,8 +169,8 @@
                 <div class="cmd-desc">Bulk-delete the specified number of messages from the current channel. Discord API limit: max 100 messages, must be less than 14 days old.</div>
             </div>
             <div class="cmd-item">
-                <div class="cmd-syntax">$timeout @user &lt;minutes&gt; &lt;reason&gt;</div>
-                <div class="cmd-desc">Apply a Discord timeout to the mentioned user for the given number of minutes. Timed-out users cannot send messages or join voice. Reason is strictly required. Hierarchy rules apply.</div>
+                <div class="cmd-syntax">$timeout @user &lt;minutes&gt;</div>
+                <div class="cmd-desc">Apply a Discord timeout to the mentioned user for the given minutes. Hierarchy rules apply (cannot timeout someone with equal or higher role).</div>
             </div>
         </div>
 

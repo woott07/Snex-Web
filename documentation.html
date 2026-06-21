@@ -268,9 +268,10 @@
             <!-- Overview -->
             <section class="doc-section reveal" id="overview">
                 <h2>Overview</h2>
-                <p>Snax is a highly modular, multi-purpose Discord bot built with <strong>discord.js v14</strong>. It combines a full-featured music player, a rich permission/role system, server moderation tools, voice management utilities, and smart anti-spam protection — all in one lightweight, easy-to-extend package.</p>
+                <p>Snax is a highly modular, multi-purpose Discord bot built with <strong>discord.js v14</strong>. It combines a full-featured music player powered by <strong>Lavalink</strong>, a rich role-based permission system, server moderation tools, voice management utilities, and smart anti-spam protection — all in one lightweight, easy-to-extend package.</p>
                 <div class="info-box">
-                    <p><strong>Default prefix:</strong> <code>$</code> — customisable per-server with <code>$setprefix</code>. You can also trigger commands by @mentioning the bot instead of using the prefix.</p>
+                    <p><strong>Invite Link:</strong> <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank">Add to Discord</a></p>
+                    <p><strong>Default Prefix:</strong> <code>$</code> — customizable per-server with <code>$setprefix</code>, or reset with <code>$remprefix</code>. You can also trigger commands by @mentioning the bot.</p>
                 </div>
             </section>
 
@@ -279,35 +280,30 @@
                 <h2>Project Structure</h2>
                 <pre><code>Snax-Bot/
 ├── index.js                  — Entry point. Creates Discord client, loads
-│                               handlers, music system, and logs in.
+│                               handlers, Lavalink music player, and logs in.
 ├── config/
 │   ├── config.json           — Main runtime configuration (prefix, volume, etc.)
 │   └── config.js             — Loader that merges .env with config.json
-├── commands/                 — All non-music prefix commands
-├── music/
-│   ├── player.js             — Initialises discord-player, loads extractors,
-│   │                           music commands, and player events
-│   ├── searchPipeline.js     — YouTube Data API v3 search + URL cleaning logic
-│   ├── interaction.js        — Queue embed interactive button handler
+├── commands/                 — All non-music prefix commands (39 files)
+├── lavalink_music/           — Lavalink music integration using Kazagumo/Shoukaku
+│   ├── player.js             — Initialises Kazagumo player, registers Lavalink
+│   │                           events, and loads music commands into the client.
+│   ├── interaction.js        — Controller button component interaction handler
 │   ├── embeds.js             — Embed builders for Now Playing / Queue UI
-│   ├── commands/             — 12 music-specific commands (play, skip, etc.)
-│   ├── events/               — Player lifecycle events (playerStart, etc.)
-│   └── extractors/           — Custom YTDLPExtractor (yt-dlp bridge)
-├── events/                   — Discord client events (messageCreate, ready, …)
+│   ├── commands/             — 13 music-specific commands (play, loop, loopQ, etc.)
+│   └── events/               — Player lifecycle events (playerStart, playerEmpty, etc.)
+├── events/                   — Discord client events (messageCreate, ready, etc.)
 ├── handlers/
 │   ├── commandHandler.js     — Dynamically loads all files from commands/
 │   └── eventHandler.js       — Dynamically loads all files from events/
 ├── utils/
-│   ├── permissions.js        — RBAC engine (groups, DB read/write, checks)
-│   ├── antiSpam.js           — Rolling-window spam detection &amp; auto-timeout
+│   ├── permissions.js        — RBAC engine (groups, DB read/write, checks, bot owner)
+│   ├── antiSpam.js           — Rolling-window spam detection & auto-timeout
 │   ├── serverLogger.js       — Creates/writes to the private snax-log channel
 │   ├── logger.js             — Terminal logger (success/warn/error)
 │   └── voiceCheck.js         — Voice-channel presence validation helper
-├── services/
-│   └── musicService.js       — High-level play helper used by the play command
 ├── data/
 │   └── permissions.json      — Auto-generated guild permission database (JSON)
-├── embeds/                   — Shared embed assets / helpers
 ├── install.bat               — One-click Windows installer
 ├── setup_mac.sh              — macOS setup script
 ├── package.json
@@ -322,14 +318,12 @@
                 <ul>
                     <li><strong>Node.js v18 or higher</strong> — <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
                     <li><strong>Discord Bot Application &amp; token</strong> — <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
-                    <li><strong>YouTube Data API v3 key</strong> — <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
-                    <li><strong>FFmpeg</strong> — bundled via <code>ffmpeg-static</code>, no manual install needed.</li>
-                    <li><strong>yt-dlp</strong> — must be installed and accessible in your system PATH.</li>
+                    <li><strong>Lavalink Server Node</strong> — either self-hosted, or a public host (like the default one configured).</li>
                 </ul>
 
                 <h3>Windows</h3>
                 <ol class="step-list">
-                    <li>Double-click <code>install.bat</code>. This runs <code>npm install</code> and creates your <code>.env</code> and <code>.gitignore</code> automatically.</li>
+                    <li>Double-click <code>install.bat</code>. This runs <code>npm install</code>, creates your <code>.env</code>, and configures default settings automatically.</li>
                     <li>Open <code>.env</code> in any text editor and fill in your credentials (see Configuration section).</li>
                     <li>Run the bot: <code>node index.js</code></li>
                 </ol>
@@ -342,11 +336,13 @@
                 </ol>
 
                 <h3>Successful Startup Output</h3>
-                <pre><code>[SUCCESS] Music extractors loaded (YTDLPExtractor + default extractors)
-[SUCCESS] Loaded 12 music commands successfully!
-[SUCCESS] Registered N music player events successfully!
-[SUCCESS] Loaded N general commands!
-🤖 Success! Logged in as Snax#XXXX</code></pre>
+                <pre><code>[SUCCESS] Loaded 13 Lavalink music commands successfully!
+[SUCCESS] Registered 2 Kazagumo player events successfully!
+[SUCCESS] Loaded 39 commands successfully!
+[SUCCESS] Registered 4 client events successfully!
+🤖 Success! Logged in as Snax#XXXX
+👑 Successfully fetched application owner: DeveloperName
+[SUCCESS] Lavalink Node "HeavenCloud-Node" connected successfully!</code></pre>
             </section>
 
             <!-- Configuration -->
@@ -355,10 +351,18 @@
 
                 <h3>.env File (Secrets — Never Share)</h3>
                 <pre><code>Bot_Token=YOUR_DISCORD_BOT_TOKEN
-YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
+OWNER_ID=YOUR_DISCORD_USER_ID
+LAVALINK_HOST=lava-v4.ajieblogs.eu.org
+LAVALINK_PORT=443
+LAVALINK_PASSWORD=https://dsc.gg/ajidevserver
+LAVALINK_SECURE=true</code></pre>
                 <ul>
                     <li><strong>Bot_Token</strong> — Your Discord bot token from the Developer Portal.</li>
-                    <li><strong>YOUTUBE_API_KEY</strong> — Google Cloud YouTube Data API v3 key. Required for text-search. Direct YouTube URLs still work without it.</li>
+                    <li><strong>OWNER_ID</strong> — (Optional) Your Discord user ID to hardcode yourself as Bot Owner. If left blank, the bot will dynamically fetch your ID from Discord on boot.</li>
+                    <li><strong>LAVALINK_HOST</strong> — The IP/domain of your Lavalink node server.</li>
+                    <li><strong>LAVALINK_PORT</strong> — The port of your Lavalink node server.</li>
+                    <li><strong>LAVALINK_PASSWORD</strong> — The access password for your Lavalink node server.</li>
+                    <li><strong>LAVALINK_SECURE</strong> — Set to <code>true</code> if the node uses SSL/WSS, otherwise <code>false</code>.</li>
                 </ul>
 
                 <h3>config/config.json (Runtime Settings)</h3>
@@ -371,14 +375,14 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
   "autoJoin": false,               // Auto-join on message (not implemented yet).
   "selfDeaf": true,                // Bot deafens itself while in VC.
   "embed": {
-    "color": "#2b2d31",            // Hex colour for all bot embeds.
-    "showThumbnail": true,         // Show song thumbnail in Now Playing embed.
+    "color": "#5865F2",            // Hex colour for all bot embeds.
+    "showThumbnail": true,         // Show song thumbnail in Queue/Now Playing.
     "showRequester": true          // Show who requested the song.
   },
   "maxQueueDisplay": 10,           // Max songs shown per queue page.
   "permissions": {
-    "sameVoiceRequired": true,     // Users must be in the same VC to control music.
-    "djRole": "",                  // Role name/ID for a dedicated DJ role (unused).
+    "sameVoiceRequired": true,     // Users must be in same VC to control music.
+    "djRole": "",                  // Dedicated DJ role check (unused).
     "adminBypass": true            // Admins bypass all voice checks.
   }
 }</code></pre>
@@ -394,12 +398,16 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
 
                 <h3>Priority Order</h3>
                 <ol class="step-list">
-                    <li><strong>Server Owner</strong> — unrestricted access to everything.</li>
+                    <li><strong>Bot Owner</strong> — unrestricted access to everything (all servers).</li>
+                    <li><strong>Server Owner</strong> — unrestricted access to everything in their server.</li>
                     <li><strong>AdminExe</strong> — bypasses all permission checks.</li>
                     <li>Assigned permission group matching the command.</li>
                     <li>@everyone (if Default group is set to @everyone).</li>
                     <li>Denied — command blocked.</li>
                 </ol>
+
+                <h3>Bot Owner Privileges</h3>
+                <p>The Bot Owner gets absolute privilege override automatically. The bot queries the Discord API on boot to fetch your client owner ID. You can also override it explicitly in your <code>.env</code> file with the <code>OWNER_ID</code> variable. Bot Owners bypass all command permission checks and all anti-spam warning/timeout filters.</p>
 
                 <h3>Permission Groups</h3>
                 <table class="data-table">
@@ -407,15 +415,15 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
                         <tr><th>Group</th><th>Commands Unlocked</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Default</td><td>play, skip, queue, ping, help, hello, nowplaying, volume, pause, resume, prev, remove, clear, shuffle, loop, autoplay, stop, join, leave</td></tr>
+                        <tr><td>Default</td><td>play, skip, queue, ping, help, hello, nowplaying, volume, pause, resume, prev, remove, clear, shuffle, loop, loopQ, autoplay, stop, join, leave</td></tr>
                         <tr><td>VoiceExe</td><td>mute, unmute, deafen, undeafen, dragreq, addme</td></tr>
                         <tr><td>setNickExe</td><td>setnick</td></tr>
                         <tr><td>ChatExe</td><td>purge, timeout</td></tr>
-                        <tr><td>ManagerExe</td><td>ban, unban, kick — plus can assign: VoiceExe, setNickExe, assign_default, default_remove</td></tr>
-                        <tr><td>AdminExe</td><td>All of the above, plus all admin/assignment commands and prefix management</td></tr>
+                        <tr><td>ManagerExe</td><td>ban, unban, kick — plus can assign: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove</td></tr>
+                        <tr><td>AdminExe</td><td>All of the above, plus all admin/assignment commands (VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass) and prefix management (setprefix, remprefix)</td></tr>
                         <tr><td>BypassExe</td><td>Anti-spam extended limit (15 warns / 20 timeout, vs 4/7 default)</td></tr>
                         <tr><td>SupBypass</td><td>Total anti-spam immunity — no warnings or timeouts ever applied</td></tr>
-                        <tr><td>OwnerOnly</td><td>Commands not in any group — Server Owner only</td></tr>
+                        <tr><td>OwnerOnly</td><td>Commands not in any group — Server Owner and Bot Owner only</td></tr>
                     </tbody>
                 </table>
 
@@ -455,9 +463,10 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
                         <tr><td>BypassExe</td><td>15 messages</td><td>Warning sent</td></tr>
                         <tr><td>BypassExe</td><td>20 messages</td><td>2-minute timeout applied</td></tr>
                         <tr><td>SupBypass</td><td>No limit</td><td>Fully immune — no warnings or timeouts</td></tr>
-                        <tr><td>AdminExe</td><td>No limit</td><td>Immune (AdminExe implies all privileges)</td></tr>
+                        <tr><td>AdminExe</td><td>No limit</td><td>Immune</td></tr>
                         <tr><td>ManagerExe</td><td>No limit</td><td>Immune</td></tr>
                         <tr><td>Server Owner</td><td>No limit</td><td>Immune</td></tr>
+                        <tr><td>Bot Owner</td><td>No limit</td><td>Immune</td></tr>
                     </tbody>
                 </table>
 
@@ -468,26 +477,40 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
 
             <!-- Music System -->
             <section class="doc-section reveal" id="music">
-                <h2>Music System</h2>
-                <p>The music system is an isolated module in the <code>music/</code> directory and is loaded separately from the general command system.</p>
+                <h2>Music System (Lavalink)</h2>
+                <p>The music system is isolated in the <code>lavalink_music/</code> directory and utilizes <strong>Lavalink</strong> (via <strong>Kazagumo</strong> &amp; **Shoukaku** wrappers) for low-overhead audio streaming.</p>
 
-                <h3>Audio Extraction Pipeline</h3>
+                <h3>Audio Playback Pipeline</h3>
                 <ol class="step-list">
                     <li>User types <code>$play &lt;query&gt;</code></li>
-                    <li><code>searchPipeline.js</code> resolves the query — if it's a URL it cleans it (Shorts → watch URL, strips radio-mix params); if it's a text search it calls YouTube Data API v3 and filters out Shorts (&lt;= 60 seconds).</li>
-                    <li>The resolved URL is passed to <code>discord-player</code> using <code>YTDLPExtractor</code>.</li>
-                    <li><code>YTDLPExtractor</code> calls the native <code>yt-dlp</code> binary to extract a stream URL, bypassing JavaScript cipher decryption issues.</li>
-                    <li>The audio stream is piped through <code>@discordjs/voice</code> to the voice channel.</li>
+                    <li>The bot checks that the user is in a voice channel.</li>
+                    <li>The bot ensures it has an active Player instance for the server (guild) or creates one using <code>player.createPlayer()</code>.</li>
+                    <li>Kazagumo queries the Lavalink server using <code>player.search(query, { requester })</code>. Lavalink handles the backend URL resolution and metadata extraction.</li>
+                    <li>The resolved tracks are loaded:
+                        <ul>
+                            <li>If a playlist is found, all tracks are added to the player's queue.</li>
+                            <li>If a single track is found, the top result is added to the queue.</li>
+                            <li>YouTube Shorts URLs are automatically converted.</li>
+                        </ul>
+                    </li>
+                    <li>Lavalink streams the audio directly to Discord's voice servers, ensuring latency-free, high-quality audio that doesn't burden the host machine.</li>
                 </ol>
 
-                <h3>Queue Embed UI</h3>
-                <p>When a song starts playing, Snax sends an interactive Now Playing embed with the song title, channel/author, duration, and thumbnail. Each queued track has three buttons:</p>
+                <h3>Interactive Embed Controller</h3>
+                <p>When a song starts playing, Snax sends an interactive Now Playing/Queue embed. It includes:</p>
                 <ul>
-                    <li><strong>[Remove]</strong> — Remove that specific song from the queue.</li>
-                    <li><strong>[Push to Top]</strong> — Move that song to play next (position 1).</li>
-                    <li><strong>[Keep]</strong> — Acknowledge / dismiss the queue entry.</li>
+                    <li>Song title (hyperlinked to original source), duration, and status indicators.</li>
+                    <li>Thumbnail (when enabled in config).</li>
+                    <li>List of up next tracks (collapsible queue list).</li>
+                    <li>Integrated media control buttons:
+                        <ul>
+                            <li>⏯️ (Play/Pause) — Toggles track pausing.</li>
+                            <li>⏭️ (Skip) — Skips the current track.</li>
+                            <li>⏹️ (Stop) — Clears queue, stops player, and disconnects.</li>
+                            <li>🔼 / 🔽 (More/Less) — Expands/collapses queue details (default up to 10 vs 3).</li>
+                        </ul>
+                    </li>
                 </ul>
-                <p>Buttons on previous embeds auto-expire when a new track is queued, keeping the chat clean.</p>
 
                 <h3>Supported Audio Sources</h3>
                 <table class="data-table">
@@ -495,16 +518,10 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
                         <tr><th>Source</th><th>Support Level</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>YouTube (URL)</td><td>Full — via YTDLPExtractor / yt-dlp</td></tr>
-                        <tr><td>YouTube (search)</td><td>Full — YouTube Data API v3 → yt-dlp extraction</td></tr>
-                        <tr><td>YouTube Shorts</td><td>Auto-converted to regular watch URLs</td></tr>
-                        <tr><td>YouTube Playlists</td><td>Supported (real playlists, not radio mixes)</td></tr>
-                        <tr><td>SoundCloud</td><td>Supported via DefaultExtractors</td></tr>
-                        <tr><td>Spotify</td><td>Metadata only — resolves to YouTube audio</td></tr>
-                        <tr><td>Apple Music</td><td>Metadata only — resolves to YouTube audio</td></tr>
-                        <tr><td>Vimeo</td><td>Supported via DefaultExtractors</td></tr>
-                        <tr><td>Discord attachments</td><td>Supported</td></tr>
-                        <tr><td>Reverbnation</td><td>Supported via DefaultExtractors</td></tr>
+                        <tr><td>YouTube (URL/Search)</td><td>Full — handled by Lavalink node</td></tr>
+                        <tr><td>SoundCloud</td><td>Full — handled by Lavalink node</td></tr>
+                        <tr><td>Spotify</td><td>Full — metadata matching → streams YouTube audio</td></tr>
+                        <tr><td>Apple Music</td><td>Full — metadata matching → streams YouTube audio</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -513,25 +530,24 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
             <section class="doc-section reveal" id="events">
                 <h2>Event Reference</h2>
 
-                <h3>Discord Client Events</h3>
+                <h3>Discord Client Events (events/)</h3>
                 <table class="data-table">
                     <thead><tr><th>Event</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td>messageCreate</td><td>Main command dispatcher. Handles prefix and @mention triggers, anti-spam checks, permission validation, and command execution. Supports custom per-guild prefixes.</td></tr>
-                        <tr><td>interactionCreate</td><td>Handles component interactions (buttons, dropdowns, modals) triggered by bot messages. Routes to the appropriate handler based on customId.</td></tr>
-                        <tr><td>guildCreate</td><td>Fires when the bot joins a new server. Creates the private snax-log text channel and sends a welcome message.</td></tr>
-                        <tr><td>ready</td><td>Fires once on bot login. Logs a confirmation with the bot's username.</td></tr>
+                        <tr><td>messageCreate</td><td>Main command dispatcher. Handles prefix/mention triggers, anti-spam checks, permission validation, and command execution.</td></tr>
+                        <tr><td>interactionCreate</td><td>Handles component interactions (buttons, dropdowns, modals). Routes to the appropriate handlers based on customId.</td></tr>
+                        <tr><td>guildCreate</td><td>Creates the private snax-log channel upon joining a server.</td></tr>
+                        <tr><td>ready</td><td>Runs on login. Fetches client application owner info.</td></tr>
                     </tbody>
                 </table>
 
-                <h3>Music Player Events</h3>
+                <h3>Kazagumo Player Events (lavalink_music/events/)</h3>
                 <table class="data-table">
                     <thead><tr><th>Event</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td>playerStart</td><td>Fired when a new track begins playback. Sends a Now Playing embed and interactive queue management buttons. Marks previous embeds as expired.</td></tr>
-                        <tr><td>emptyQueue</td><td>Fired when the queue is exhausted. Notifies the channel that triggered the last play command.</td></tr>
-                        <tr><td>error</td><td>Handles audio extraction and playback errors. Logs the error and notifies the channel with a user-friendly message.</td></tr>
-                        <tr><td>disconnect</td><td>Handles unexpected disconnections from voice channels gracefully.</td></tr>
+                        <tr><td>playerStart</td><td>Fires when a new track begins playback. Sends the main queue controller embed and action buttons.</td></tr>
+                        <tr><td>playerEmpty</td><td>Fires when the queue ends; handles empty queue channel alerts and disconnects after cooldown.</td></tr>
+                        <tr><td>error</td><td>Logs Lavalink player and connection errors.</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -542,52 +558,28 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
 
                 <h3>utils/permissions.js</h3>
                 <table class="data-table">
-                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Function / Property</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td>hasPermission(message, commandName)</td><td>Returns true if the message author is allowed to run the given command, based on the RBAC group the command belongs to.</td></tr>
-                        <tr><td>hasGroup(message, groupName)</td><td>Returns true if the message author belongs to the given permission group. Used by antiSpam.js to check BypassExe / SupBypass membership.</td></tr>
-                        <tr><td>addTarget(guildId, groupName, targetId)</td><td>Adds a role/user ID to a permission group. For AdminExe, places the target in a 10-minute pending queue. Returns: true | false | 'already_admin' | 'pending'</td></tr>
-                        <tr><td>removeTarget(guildId, groupName, targetId)</td><td>Removes a role/user ID from a permission group. Also clears pendingAdminExe entries when removing AdminExe.</td></tr>
-                        <tr><td>checkManagerHierarchy(message, targetMember)</td><td>For ManagerExe holders (not AdminExe), enforces that they can only act on users with a lower highest-role position.</td></tr>
-                        <tr><td>getGuildPrefix / setGuildPrefix</td><td>Reads or writes the custom command prefix for a specific guild.</td></tr>
+                        <tr><td>hasPermission(message, commandName)</td><td>Checks if the user is allowed to run a command.</td></tr>
+                        <tr><td>hasGroup(message, groupName)</td><td>Checks if user holds a specific permission group.</td></tr>
+                        <tr><td>isBotOwner(message)</td><td>Bypasses checks if author is the Bot Owner.</td></tr>
+                        <tr><td>addTarget / removeTarget</td><td>Adds or removes a user/role from a group. For AdminExe, handles 10-minute pending delay.</td></tr>
+                        <tr><td>checkManagerHierarchy</td><td>Enforces Manager hierarchy roles.</td></tr>
+                        <tr><td>getGuildPrefix / setGuildPrefix</td><td>Manages custom guild prefix overrides.</td></tr>
                     </tbody>
                 </table>
 
                 <h3>utils/antiSpam.js</h3>
-                <table class="data-table">
-                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>checkSpam(message)</td><td>Evaluates message frequency for the author using an in-memory rolling window. Sends a warning or applies a 2-minute Discord timeout if thresholds are hit. Returns true if a timeout was applied (caller should abort command).</td></tr>
-                    </tbody>
-                </table>
+                <p>Monitors user message frequency with auto-warning and 2-minute timeouts.</p>
 
                 <h3>utils/serverLogger.js</h3>
-                <table class="data-table">
-                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>getOrCreateLogChannel(guild)</td><td>Finds or creates the private 'snax-log' text channel. @everyone is denied view/send; bot is allowed view/send/embed.</td></tr>
-                        <tr><td>sendGuildLog(guild, messageOrEmbed)</td><td>Posts a string or embed object to the guild's snax-log channel.</td></tr>
-                    </tbody>
-                </table>
+                <p>Creates and writes server logs to the private `#snax-log` channel.</p>
 
                 <h3>utils/logger.js</h3>
-                <p>Terminal logger with colour-coded output:</p>
-                <ul>
-                    <li><code>logger.success('...')</code> — Green</li>
-                    <li><code>logger.warn('...')</code> — Yellow</li>
-                    <li><code>logger.error('...')</code> — Red</li>
-                    <li><code>logger.info('...')</code> — Blue/White</li>
-                </ul>
+                <p>Custom terminal logger with color codes (success/warn/error).</p>
 
-                <h3>music/searchPipeline.js</h3>
-                <table class="data-table">
-                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>resolveQuery(query)</td><td>Main entry point. Determines if input is a URL or text search, cleans YouTube URLs, calls the YouTube Data API v3, and returns a structured result with the resolved playable URL.</td></tr>
-                        <tr><td>cleanYouTubeUrl(url)</td><td>Strips radio-mix and tracking parameters from YouTube URLs. Converts Shorts URLs to standard watch URLs.</td></tr>
-                        <tr><td>getYouTubeVideoMetadata(videoId)</td><td>Fetches title, channel, thumbnail, and duration for a specific YouTube video ID using the YouTube Data API v3.</td></tr>
-                    </tbody>
-                </table>
+                <h3>utils/voiceCheck.js</h3>
+                <p>Checks voice channel presence validation before music commands run.</p>
             </section>
 
             <!-- Adding Commands -->
@@ -596,13 +588,13 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
                 <p>Snax uses a dynamic command loader — adding a command requires only creating a new file. No manual registration is needed.</p>
 
                 <ol class="step-list">
-                    <li>Create a new <code>.js</code> file in the <code>commands/</code> directory. For music-related commands, use <code>music/commands/</code> instead.</li>
+                    <li>Create a new <code>.js</code> file in the <code>commands/</code> directory (or <code>lavalink_music/commands/</code> for music commands).</li>
                     <li>
                         Export an object with at minimum:
                         <pre><code>module.exports = {
   name: 'mycommand',             // REQUIRED — command trigger name (lowercase)
   aliases: ['mc', 'mycmd'],      // OPTIONAL — alternative trigger names
-  description: 'Does a thing',  // OPTIONAL — shown in help
+  description: 'Does a thing',   // OPTIONAL — shown in help
   async execute(message, args, client, player, config) {
     // Your command logic here
     message.reply('Hello!');
@@ -610,11 +602,7 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
 };</code></pre>
                     </li>
                     <li>Restart the bot. The <code>commandHandler</code> will automatically detect and load the file.</li>
-                    <li>
-                        To require a permission group, add the command name to the appropriate group in <code>utils/permissions.js</code>:
-                        <pre><code>'VoiceExe': ['mute', 'unmute', ..., 'mycommand'],</code></pre>
-                        If the command is not listed in any group, it defaults to <strong>OwnerOnly</strong>.
-                    </li>
+                    <li>To make the command require a permission group, add the command name to the appropriate group in the <code>COMMAND_GROUPS</code> object inside <code>utils/permissions.js</code>. If not listed in any group, it will default to <strong>OwnerOnly</strong>.</li>
                 </ol>
             </section>
 
@@ -625,56 +613,29 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
                     <thead><tr><th>Package</th><th>Version</th><th>Purpose</th></tr></thead>
                     <tbody>
                         <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord API wrapper</td></tr>
-                        <tr><td>@discordjs/voice</td><td>^0.19.2</td><td>Voice channel audio streaming</td></tr>
-                        <tr><td>discord-player</td><td>^7.2.0</td><td>Music queue and player engine</td></tr>
-                        <tr><td>@discord-player/extractor</td><td>^7.2.0</td><td>Default audio extractors bundle</td></tr>
-                        <tr><td>discord-player-youtubei</td><td>^2.0.0</td><td>YouTubei.js extractor bridge</td></tr>
-                        <tr><td>youtubei.js</td><td>^17.0.1</td><td>YouTube internal API client</td></tr>
-                        <tr><td>dotenv</td><td>^17.4.2</td><td>.env file loader</td></tr>
-                        <tr><td>ffmpeg-static</td><td>^5.3.0</td><td>Bundled FFmpeg binary (no install)</td></tr>
-                        <tr><td>libsodium-wrappers</td><td>^0.8.4</td><td>Voice encryption (Opus codec)</td></tr>
-                        <tr><td>play-dl</td><td>^1.9.7</td><td>Fallback audio extraction</td></tr>
-                        <tr><td>youtube-dl-exec</td><td>^3.1.7</td><td>yt-dlp binary execution wrapper</td></tr>
-                        <tr><td>youtube-ext</td><td>^1.1.25</td><td>YouTube extraction fallback</td></tr>
-                        <tr><td>ytdl-core-discord</td><td>^1.3.1</td><td>Legacy YouTube downloader</td></tr>
+                        <tr><td>dotenv</td><td>^17.4.2</td><td>Loads .env variables</td></tr>
+                        <tr><td>kazagumo</td><td>^3.4.3</td><td>Lavalink node manager &amp; queue wrapper</td></tr>
+                        <tr><td>shoukaku</td><td>^4.3.0</td><td>Lavalink node connector library</td></tr>
                     </tbody>
                 </table>
-                <div class="info-box">
-                    <p><strong>yt-dlp</strong> must be installed separately and accessible in the system PATH. The YTDLPExtractor calls yt-dlp to bypass broken JavaScript cipher decryption.</p>
-                </div>
             </section>
 
             <!-- Known Limitations -->
             <section class="doc-section reveal" id="limitations">
-                <h2>Known Limitations</h2>
-
-                <h3>YouTube API Quota</h3>
-                <p>The YouTube Data API v3 has a daily quota of 10,000 units per project. Each text-search call uses approximately 102 units (100 for search + 1 per video detail). If the quota is exceeded, the bot notifies the user and refuses to search until the quota resets (midnight Pacific Time). Direct URL playback is NOT affected by API quota.</p>
-
-                <h3>Shorts Auto-Conversion</h3>
-                <p>YouTube Shorts URLs (<code>youtube.com/shorts/&lt;id&gt;</code>) are automatically converted to standard watch URLs. Shorts are also filtered out of text-search results — any video ≤ 60 seconds is skipped.</p>
+                <h2>Known Notes &amp; Limitations</h2>
 
                 <h3>Pending AdminExe</h3>
-                <p>AdminExe grants have a mandatory 10-minute delay before taking effect. This is intentional and cannot be bypassed (except by the server owner).</p>
+                <p>AdminExe grants have a mandatory 10-minute delay before taking effect. This is intentional and cannot be bypassed (except by Server/Bot Owners).</p>
 
                 <h3>Purge Age Limit</h3>
-                <p>Discord's API does not allow bulk-deleting messages older than 14 days. The <code>$purge</code> command will skip or fail on older messages.</p>
+                <p>Discord's API does not allow bulk-deleting messages older than 14 days.</p>
 
-                <h3>Required Discord Intents</h3>
-                <p>The bot requires these Privileged Intents enabled in the Developer Portal under your application's settings:</p>
-                <ul>
-                    <li><strong>Message Content Intent</strong></li>
-                    <li><strong>Server Members Intent</strong> (for role checks)</li>
-                </ul>
+                <h3>Bot Privileged Intents</h3>
+                <p>Ensure Message Content, Server Members, and Voice State intents are enabled in the Discord Developer Portal under bot settings.</p>
 
                 <h3>Local Data Storage</h3>
-                <p>The <code>data/permissions.json</code> file is stored locally on the host machine and is not synced to any external database. Back it up regularly.</p>
-
-                <div class="info-box">
-                    <p>The bot is still under active development. Features marked with <code>(TODO)</code> in the source code may be incomplete or subject to change.</p>
-                </div>
+                <p>Guild permissions are stored in <code>data/permissions.json</code> on the local host.</p>
             </section>
-
         </main>
     </div>
 
