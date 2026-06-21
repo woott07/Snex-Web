@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNAX | Commands</title>
+    <meta name="description" content="Full command reference for SNAX — the enterprise Discord moderation and music bot.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
+                <span class="logo">SNAX</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="nav-btn">Add to Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <img src="logo.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h1 class="load-reveal-2">Commands</h1>
+            <p class="load-reveal-3">Full reference for every SNAX command, organized by permission group. Default prefix is <code>$</code>.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn-primary load-pop">
+                Add to Server
+            </a>
+        </div>
+    </header>
+
+    <div class="content-container" style="margin-top: 2rem;">
+        <p class="reveal">Below is the comprehensive list of every command available, categorized by permission group. The default prefix is <code>$</code> — this can be changed per-server by an Admin using <code>$setprefix</code>. You can also trigger commands by @mentioning the bot.</p>
+
+        <!-- Music & Default -->
+        <div class="command-category reveal">
+            <h2>Music &amp; Default Utilities</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>Default group</strong> (open to @everyone by default)</p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$play &lt;song name or URL&gt; <span class="cmd-alias">(alias: p)</span></div>
+                <div class="cmd-desc">Search for and play a song in your current voice channel. Accepts song names, YouTube URLs, playlist URLs, and YouTube Shorts (auto-converted). Adds to queue if a track is already playing.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$nowplaying <span class="cmd-alias">(alias: np)</span></div>
+                <div class="cmd-desc">Display an embed showing the currently playing track — title, author, duration, and progress.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$queue <span class="cmd-alias">(alias: q)</span></div>
+                <div class="cmd-desc">Show the current song queue as an interactive paginated embed (up to 10 songs per page).</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$volume &lt;0-100&gt; <span class="cmd-alias">(alias: vol)</span></div>
+                <div class="cmd-desc">With no argument: display current volume. With a number: set playback volume.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$pause</div>
+                <div class="cmd-desc">Pause the current track.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$resume</div>
+                <div class="cmd-desc">Resume a paused track.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$skip <span class="cmd-alias">(aliases: s, next)</span></div>
+                <div class="cmd-desc">Skip the currently playing track and move to the next one in queue.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$prev <span class="cmd-alias">(aliases: previous, back)</span></div>
+                <div class="cmd-desc">Go back and replay the previously played track.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$remove &lt;song name&gt;</div>
+                <div class="cmd-desc">Remove a specific song from the queue by name (case-insensitive, partial match supported). Removes the first matching entry.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$clear</div>
+                <div class="cmd-desc">Clear all songs from the upcoming queue. Does not stop the current track.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$shuffle</div>
+                <div class="cmd-desc">Randomly shuffle all songs currently in the queue.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$loop <span class="cmd-alias">(alias: repeat)</span></div>
+                <div class="cmd-desc">Cycle through loop modes: Track → loops the current song. Queue → loops the entire queue. Off → disables looping.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$autoplay <span class="cmd-alias">(alias: ap)</span></div>
+                <div class="cmd-desc">Toggle autoplay mode. When enabled, the bot automatically queues related songs when the queue runs out.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$stop</div>
+                <div class="cmd-desc">Stop playback completely, clear the queue, and leave the voice channel.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$join</div>
+                <div class="cmd-desc">Make the bot join your current voice channel without playing anything.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$leave <span class="cmd-alias">(aliases: disconnect, dc)</span></div>
+                <div class="cmd-desc">Make the bot leave the voice channel and clear the queue.</div>
+            </div>
+        </div>
+
+        <!-- Voice Management -->
+        <div class="command-category reveal">
+            <h2>Voice Management</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>VoiceExe</strong></p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$mute @user</div>
+                <div class="cmd-desc">Server-mute a user in a voice channel, suppressing their microphone for everyone in the server.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$unmute @user</div>
+                <div class="cmd-desc">Remove a server-mute from a user.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$deafen @user</div>
+                <div class="cmd-desc">Server-deafen a user so they can no longer hear anyone in voice channels.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$undeafen @user</div>
+                <div class="cmd-desc">Remove a server-deafen from a user.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$dragreq @user</div>
+                <div class="cmd-desc">Send an interactive drag request to a user. They see Confirm / Deny buttons — on confirm, they are moved to your current voice channel.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$addme @user</div>
+                <div class="cmd-desc">Send a request to a user asking them to let you join their voice channel. On confirm, you are moved to their VC.</div>
+            </div>
+        </div>
+
+        <!-- Nickname Commands -->
+        <div class="command-category reveal">
+            <h2>Nickname Management</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>setNickExe</strong></p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$setnick &lt;name&gt;</div>
+                <div class="cmd-desc">Change the bot's own nickname in the server.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$setnick @user &lt;name&gt;</div>
+                <div class="cmd-desc">Change the nickname of the mentioned user. setNickExe holders can only change nicknames of users below their highest role. Admins can change any user's nickname.</div>
+            </div>
+        </div>
+
+        <!-- Chat Management -->
+        <div class="command-category reveal">
+            <h2>Chat Management</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>ChatExe</strong></p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$purge &lt;1-100&gt;</div>
+                <div class="cmd-desc">Bulk-delete the specified number of messages from the current channel. Discord API limit: max 100 messages, must be less than 14 days old.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$timeout @user &lt;minutes&gt; &lt;reason&gt;</div>
+                <div class="cmd-desc">Apply a Discord timeout to the mentioned user for the given number of minutes. Timed-out users cannot send messages or join voice. Reason is strictly required. Hierarchy rules apply.</div>
+            </div>
+        </div>
+
+        <!-- Manager Commands -->
+        <div class="command-category reveal">
+            <h2>Manager Commands</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>ManagerExe</strong></p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$ban @user</div>
+                <div class="cmd-desc">Permanently ban the mentioned user from the server. Shows a confirmation embed with [Confirm Ban] and [Cancel] buttons. Confirmation expires after 30 seconds. Managers cannot ban users with an equal or higher role.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$kick @user</div>
+                <div class="cmd-desc">Kick the mentioned user from the server. Shows a similar confirmation prompt. Cannot target equal or higher roles.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$unban &lt;user_id&gt;</div>
+                <div class="cmd-desc">Unban a previously banned user using their Discord User ID (not a mention, since banned users are no longer in the server).</div>
+            </div>
+        </div>
+
+        <!-- Admin Commands -->
+        <div class="command-category reveal">
+            <h2>Admin / Permission Commands</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>AdminExe</strong> (assign_default / default_remove also available to ManagerExe)</p>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">All assignment commands accept either a @role mention or a @user mention.</p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$AdminExe / $remAdminExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke AdminExe power. Granting applies a mandatory 10-minute cooldown before the target gains full privileges. Revoking is immediate.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$ManagerExe / $remManagerExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke ManagerExe power.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$ChatExe / $remChatExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke ChatExe (chat moderation) power.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$VoiceExe / $remVoiceExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke VoiceExe (voice management) power.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$setNickExe / $remNickExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke Nickname management power.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$assign_default / $default_remove @role/@everyone</div>
+                <div class="cmd-desc">Grant or revoke Default (music) group access. Controls who can use music commands.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$BypassExe / $remBypassExe @role/@user</div>
+                <div class="cmd-desc">Grant or revoke extended anti-spam limits (15 warns / 20 timeout threshold instead of the default 4/7).</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$SupBypass / $remSupBypass @role/@user</div>
+                <div class="cmd-desc">Grant or revoke total immunity from the anti-spam filter. No warnings or timeouts will ever be applied.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$setprefix &lt;new_prefix&gt;</div>
+                <div class="cmd-desc">Change the bot's command prefix for this server. Example: <code>$setprefix !</code></div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$remprefix</div>
+                <div class="cmd-desc">Reset the prefix back to the global default (<code>$</code>).</div>
+            </div>
+        </div>
+
+        <!-- Announcement Commands -->
+        <div class="command-category reveal">
+            <h2>Announcement Commands</h2>
+            <p style="font-size:1rem; color:var(--text-muted); margin-bottom:1.5rem;">Permission required: <strong>AdminExe</strong></p>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$announce <span class="cmd-alias">(alias: announcement)</span></div>
+                <div class="cmd-desc">Launch an interactive announcement wizard. Step 1: choose the target text channel from a dropdown. Step 2: a modal pops up with Subject/Title (up to 100 chars) and Announcement Details fields. On submit, a rich embed is sent to the selected channel with a jump link returned to you. Times out after 45s on channel selection or 3 minutes on modal.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$announceOwn &lt;message&gt;</div>
+                <div class="cmd-desc"><strong>Bot Owner only.</strong> Sends a plain announcement message to all servers the bot is currently in. Used for global broadcasts.</div>
+            </div>
+        </div>
+
+        <!-- Utility Commands -->
+        <div class="command-category reveal">
+            <h2>Utility Commands</h2>
+
+            <div class="cmd-item">
+                <div class="cmd-syntax">$help</div>
+                <div class="cmd-desc">Opens an interactive help menu with a dropdown selector. Selecting a category shows all commands in that group. Only categories the user has permission for can be viewed. Menu expires after 2 minutes of inactivity.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$ping</div>
+                <div class="cmd-desc">Replies with the bot's current WebSocket latency in milliseconds.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$hello</div>
+                <div class="cmd-desc">A simple greeting command. The bot replies with a friendly message.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
+                <h2>SNAX</h2>
+            </div>
+            <div class="footer-links">
+                <a href="commands.html">Commands</a>
+                <a href="documentation.html">Documentation</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

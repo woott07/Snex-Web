@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNAX | Documentation</title>
+    <meta name="description" content="Full technical documentation for SNAX — setup, configuration, permission system, anti-spam, music system, and more.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Doc-specific additions */
+        .doc-nav {
+            position: sticky;
+            top: 90px;
+            width: 240px;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        .doc-nav-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .doc-nav ul {
+            list-style: none;
+            border-left: 2px solid var(--border-color);
+            padding-left: 1.25rem;
+        }
+
+        .doc-nav ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .doc-nav ul li a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.2s, opacity 0.2s;
+        }
+
+        .doc-nav ul li a:hover {
+            color: var(--text-main);
+            opacity: 1;
+        }
+
+        .doc-nav ul li a.active {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .doc-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 4rem 8rem;
+            display: flex;
+            gap: 5rem;
+        }
+
+        .doc-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .doc-section {
+            margin-bottom: 6rem;
+            scroll-margin-top: 110px;
+        }
+
+        .doc-section h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            border-bottom: 3px solid var(--text-main);
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-section h3 {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .doc-section p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+        }
+
+        .doc-section ul, .doc-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .doc-section li {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        .doc-section li strong {
+            color: var(--text-main);
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--border-color);
+            padding: 0.15em 0.45em;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--text-main);
+        }
+
+        pre {
+            background: #F0F0F0;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--text-main);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .info-box {
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--text-main);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--surface);
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            border-bottom: 2px solid var(--text-main);
+            background: var(--surface);
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+            vertical-align: top;
+        }
+
+        .data-table td:first-child {
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
+        }
+
+        .doc-hero {
+            padding-bottom: 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            padding: 1rem 1rem 1rem 3.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0.75rem;
+            top: 1rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        @media (max-width: 1024px) {
+            .doc-layout { flex-direction: column; padding: 2rem; gap: 2rem; }
+            .doc-nav { position: static; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
+                <span class="logo">SNAX</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="nav-btn">Add to Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero doc-hero">
+        <div class="hero-content">
+            <img src="logo.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h1 class="load-reveal-2">Documentation</h1>
+            <p class="load-reveal-3">Everything you need to set up, configure, and extend SNAX. Version 1.0.0.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn-primary load-pop">
+                Add to Server
+            </a>
+        </div>
+    </header>
+
+    <div class="doc-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="doc-nav">
+            <p class="doc-nav-title">On this page</p>
+            <ul>
+                <li><a href="#overview" id="nav-overview">Overview</a></li>
+                <li><a href="#project-structure" id="nav-project-structure">Project Structure</a></li>
+                <li><a href="#setup" id="nav-setup">Setup &amp; Installation</a></li>
+                <li><a href="#configuration" id="nav-configuration">Configuration</a></li>
+                <li><a href="#permissions" id="nav-permissions">Permission System</a></li>
+                <li><a href="#antispam" id="nav-antispam">Anti-Spam System</a></li>
+                <li><a href="#music" id="nav-music">Music System</a></li>
+                <li><a href="#events" id="nav-events">Event Reference</a></li>
+                <li><a href="#utils" id="nav-utils">Utility Modules</a></li>
+                <li><a href="#adding-commands" id="nav-adding-commands">Adding New Commands</a></li>
+                <li><a href="#dependencies" id="nav-dependencies">Dependencies</a></li>
+                <li><a href="#limitations" id="nav-limitations">Known Limitations</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="doc-content">
+
+            <!-- Overview -->
+            <section class="doc-section reveal" id="overview">
+                <h2>Overview</h2>
+                <p>Snax is a highly modular, multi-purpose Discord bot built with <strong>discord.js v14</strong>. It combines a full-featured music player, a rich permission/role system, server moderation tools, voice management utilities, and smart anti-spam protection — all in one lightweight, easy-to-extend package.</p>
+                <div class="info-box">
+                    <p><strong>Default prefix:</strong> <code>$</code> — customisable per-server with <code>$setprefix</code>. You can also trigger commands by @mentioning the bot instead of using the prefix.</p>
+                </div>
+            </section>
+
+            <!-- Project Structure -->
+            <section class="doc-section reveal" id="project-structure">
+                <h2>Project Structure</h2>
+                <pre><code>Snax-Bot/
+├── index.js                  — Entry point. Creates Discord client, loads
+│                               handlers, music system, and logs in.
+├── config/
+│   ├── config.json           — Main runtime configuration (prefix, volume, etc.)
+│   └── config.js             — Loader that merges .env with config.json
+├── commands/                 — All non-music prefix commands
+├── music/
+│   ├── player.js             — Initialises discord-player, loads extractors,
+│   │                           music commands, and player events
+│   ├── searchPipeline.js     — YouTube Data API v3 search + URL cleaning logic
+│   ├── interaction.js        — Queue embed interactive button handler
+│   ├── embeds.js             — Embed builders for Now Playing / Queue UI
+│   ├── commands/             — 12 music-specific commands (play, skip, etc.)
+│   ├── events/               — Player lifecycle events (playerStart, etc.)
+│   └── extractors/           — Custom YTDLPExtractor (yt-dlp bridge)
+├── events/                   — Discord client events (messageCreate, ready, …)
+├── handlers/
+│   ├── commandHandler.js     — Dynamically loads all files from commands/
+│   └── eventHandler.js       — Dynamically loads all files from events/
+├── utils/
+│   ├── permissions.js        — RBAC engine (groups, DB read/write, checks)
+│   ├── antiSpam.js           — Rolling-window spam detection &amp; auto-timeout
+│   ├── serverLogger.js       — Creates/writes to the private snax-log channel
+│   ├── logger.js             — Terminal logger (success/warn/error)
+│   └── voiceCheck.js         — Voice-channel presence validation helper
+├── services/
+│   └── musicService.js       — High-level play helper used by the play command
+├── data/
+│   └── permissions.json      — Auto-generated guild permission database (JSON)
+├── embeds/                   — Shared embed assets / helpers
+├── install.bat               — One-click Windows installer
+├── setup_mac.sh              — macOS setup script
+├── package.json
+└── .env                      — Secret tokens (never commit this file!)</code></pre>
+            </section>
+
+            <!-- Setup -->
+            <section class="doc-section reveal" id="setup">
+                <h2>Setup &amp; Installation</h2>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li><strong>Node.js v18 or higher</strong> — <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
+                    <li><strong>Discord Bot Application &amp; token</strong> — <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
+                    <li><strong>YouTube Data API v3 key</strong> — <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+                    <li><strong>FFmpeg</strong> — bundled via <code>ffmpeg-static</code>, no manual install needed.</li>
+                    <li><strong>yt-dlp</strong> — must be installed and accessible in your system PATH.</li>
+                </ul>
+
+                <h3>Windows</h3>
+                <ol class="step-list">
+                    <li>Double-click <code>install.bat</code>. This runs <code>npm install</code> and creates your <code>.env</code> and <code>.gitignore</code> automatically.</li>
+                    <li>Open <code>.env</code> in any text editor and fill in your credentials (see Configuration section).</li>
+                    <li>Run the bot: <code>node index.js</code></li>
+                </ol>
+
+                <h3>macOS / Linux</h3>
+                <ol class="step-list">
+                    <li>Run the setup script: <code>bash setup_mac.sh</code></li>
+                    <li>Fill in <code>.env</code> (see Configuration section).</li>
+                    <li>Run the bot: <code>node index.js</code></li>
+                </ol>
+
+                <h3>Successful Startup Output</h3>
+                <pre><code>[SUCCESS] Music extractors loaded (YTDLPExtractor + default extractors)
+[SUCCESS] Loaded 12 music commands successfully!
+[SUCCESS] Registered N music player events successfully!
+[SUCCESS] Loaded N general commands!
+🤖 Success! Logged in as Snax#XXXX</code></pre>
+            </section>
+
+            <!-- Configuration -->
+            <section class="doc-section reveal" id="configuration">
+                <h2>Configuration</h2>
+
+                <h3>.env File (Secrets — Never Share)</h3>
+                <pre><code>Bot_Token=YOUR_DISCORD_BOT_TOKEN
+YOUTUBE_API_KEY=YOUR_YOUTUBE_DATA_API_V3_KEY</code></pre>
+                <ul>
+                    <li><strong>Bot_Token</strong> — Your Discord bot token from the Developer Portal.</li>
+                    <li><strong>YOUTUBE_API_KEY</strong> — Google Cloud YouTube Data API v3 key. Required for text-search. Direct YouTube URLs still work without it.</li>
+                </ul>
+
+                <h3>config/config.json (Runtime Settings)</h3>
+                <pre><code>{
+  "prefix": "$",                   // Default command prefix for all servers.
+  "defaultVolume": 100,            // Starting playback volume (0–100).
+  "leaveOnEmpty": true,            // Leave voice channel when it becomes empty.
+  "leaveOnEmptyCooldown": 30000,   // Milliseconds to wait before leaving (30 s).
+  "leaveOnEnd": false,             // Stay in VC after the queue finishes.
+  "autoJoin": false,               // Auto-join on message (not implemented yet).
+  "selfDeaf": true,                // Bot deafens itself while in VC.
+  "embed": {
+    "color": "#2b2d31",            // Hex colour for all bot embeds.
+    "showThumbnail": true,         // Show song thumbnail in Now Playing embed.
+    "showRequester": true          // Show who requested the song.
+  },
+  "maxQueueDisplay": 10,           // Max songs shown per queue page.
+  "permissions": {
+    "sameVoiceRequired": true,     // Users must be in the same VC to control music.
+    "djRole": "",                  // Role name/ID for a dedicated DJ role (unused).
+    "adminBypass": true            // Admins bypass all voice checks.
+  }
+}</code></pre>
+                <div class="info-box">
+                    <p>Per-server prefix overrides are stored automatically in <code>data/permissions.json</code> and take precedence over the global prefix in <code>config.json</code>.</p>
+                </div>
+            </section>
+
+            <!-- Permission System -->
+            <section class="doc-section reveal" id="permissions">
+                <h2>Permission System (RBAC)</h2>
+                <p>Snax uses a custom Role-Based Access Control (RBAC) system stored in <code>data/permissions.json</code>. Permissions are evaluated per-server (guild).</p>
+
+                <h3>Priority Order</h3>
+                <ol class="step-list">
+                    <li><strong>Server Owner</strong> — unrestricted access to everything.</li>
+                    <li><strong>AdminExe</strong> — bypasses all permission checks.</li>
+                    <li>Assigned permission group matching the command.</li>
+                    <li>@everyone (if Default group is set to @everyone).</li>
+                    <li>Denied — command blocked.</li>
+                </ol>
+
+                <h3>Permission Groups</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Group</th><th>Commands Unlocked</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Default</td><td>play, skip, queue, ping, help, hello, nowplaying, volume, pause, resume, prev, remove, clear, shuffle, loop, autoplay, stop, join, leave</td></tr>
+                        <tr><td>VoiceExe</td><td>mute, unmute, deafen, undeafen, dragreq, addme</td></tr>
+                        <tr><td>setNickExe</td><td>setnick</td></tr>
+                        <tr><td>ChatExe</td><td>purge, timeout</td></tr>
+                        <tr><td>ManagerExe</td><td>ban, unban, kick — plus can assign: VoiceExe, setNickExe, assign_default, default_remove</td></tr>
+                        <tr><td>AdminExe</td><td>All of the above, plus all admin/assignment commands and prefix management</td></tr>
+                        <tr><td>BypassExe</td><td>Anti-spam extended limit (15 warns / 20 timeout, vs 4/7 default)</td></tr>
+                        <tr><td>SupBypass</td><td>Total anti-spam immunity — no warnings or timeouts ever applied</td></tr>
+                        <tr><td>OwnerOnly</td><td>Commands not in any group — Server Owner only</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>AdminExe 10-Minute Cooldown</h3>
+                <p>When AdminExe is granted with <code>$AdminExe @target</code>, the target is placed in a <code>pendingAdminExe</code> queue with a 10-minute delay before becoming a full AdminExe. This prevents accidental instant privilege escalation. If <code>$remAdminExe</code> is called before the 10 minutes elapse, the pending entry is removed immediately.</p>
+
+                <h3>Data Storage Format</h3>
+                <pre><code>{
+  "&lt;guild_id&gt;": {
+    "Default": ["@everyone"],
+    "VoiceExe": ["&lt;role_or_user_id&gt;", ...],
+    "setNickExe": [...],
+    "ChatExe": [...],
+    "ManagerExe": [...],
+    "AdminExe": [...],
+    "pendingAdminExe": { "&lt;id&gt;": &lt;unix_timestamp_ms&gt; },
+    "BypassExe": [...],
+    "SupBypass": [...],
+    "customPrefix": "&lt;prefix&gt;"   // optional — only present when set
+  }
+}</code></pre>
+                <p>New guilds are initialised with <code>Default: ["@everyone"]</code> so music commands work for everyone out of the box.</p>
+            </section>
+
+            <!-- Anti-Spam -->
+            <section class="doc-section reveal" id="antispam">
+                <h2>Anti-Spam System</h2>
+                <p>The bot monitors message frequency using an in-memory rolling-window counter. Each user's message timestamps are tracked over a <strong>10-second window</strong>.</p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Tier</th><th>Limit (10s window)</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Normal user</td><td>4 messages</td><td>Warning sent (auto-deleted after 5s)</td></tr>
+                        <tr><td>Normal user</td><td>7 messages</td><td>2-minute Discord timeout applied</td></tr>
+                        <tr><td>BypassExe</td><td>15 messages</td><td>Warning sent</td></tr>
+                        <tr><td>BypassExe</td><td>20 messages</td><td>2-minute timeout applied</td></tr>
+                        <tr><td>SupBypass</td><td>No limit</td><td>Fully immune — no warnings or timeouts</td></tr>
+                        <tr><td>AdminExe</td><td>No limit</td><td>Immune (AdminExe implies all privileges)</td></tr>
+                        <tr><td>ManagerExe</td><td>No limit</td><td>Immune</td></tr>
+                        <tr><td>Server Owner</td><td>No limit</td><td>Immune</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <p>Only bot commands (prefix / @mention) are checked — regular chat messages are not affected by this filter.</p>
+                </div>
+            </section>
+
+            <!-- Music System -->
+            <section class="doc-section reveal" id="music">
+                <h2>Music System</h2>
+                <p>The music system is an isolated module in the <code>music/</code> directory and is loaded separately from the general command system.</p>
+
+                <h3>Audio Extraction Pipeline</h3>
+                <ol class="step-list">
+                    <li>User types <code>$play &lt;query&gt;</code></li>
+                    <li><code>searchPipeline.js</code> resolves the query — if it's a URL it cleans it (Shorts → watch URL, strips radio-mix params); if it's a text search it calls YouTube Data API v3 and filters out Shorts (&lt;= 60 seconds).</li>
+                    <li>The resolved URL is passed to <code>discord-player</code> using <code>YTDLPExtractor</code>.</li>
+                    <li><code>YTDLPExtractor</code> calls the native <code>yt-dlp</code> binary to extract a stream URL, bypassing JavaScript cipher decryption issues.</li>
+                    <li>The audio stream is piped through <code>@discordjs/voice</code> to the voice channel.</li>
+                </ol>
+
+                <h3>Queue Embed UI</h3>
+                <p>When a song starts playing, Snax sends an interactive Now Playing embed with the song title, channel/author, duration, and thumbnail. Each queued track has three buttons:</p>
+                <ul>
+                    <li><strong>[Remove]</strong> — Remove that specific song from the queue.</li>
+                    <li><strong>[Push to Top]</strong> — Move that song to play next (position 1).</li>
+                    <li><strong>[Keep]</strong> — Acknowledge / dismiss the queue entry.</li>
+                </ul>
+                <p>Buttons on previous embeds auto-expire when a new track is queued, keeping the chat clean.</p>
+
+                <h3>Supported Audio Sources</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Source</th><th>Support Level</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>YouTube (URL)</td><td>Full — via YTDLPExtractor / yt-dlp</td></tr>
+                        <tr><td>YouTube (search)</td><td>Full — YouTube Data API v3 → yt-dlp extraction</td></tr>
+                        <tr><td>YouTube Shorts</td><td>Auto-converted to regular watch URLs</td></tr>
+                        <tr><td>YouTube Playlists</td><td>Supported (real playlists, not radio mixes)</td></tr>
+                        <tr><td>SoundCloud</td><td>Supported via DefaultExtractors</td></tr>
+                        <tr><td>Spotify</td><td>Metadata only — resolves to YouTube audio</td></tr>
+                        <tr><td>Apple Music</td><td>Metadata only — resolves to YouTube audio</td></tr>
+                        <tr><td>Vimeo</td><td>Supported via DefaultExtractors</td></tr>
+                        <tr><td>Discord attachments</td><td>Supported</td></tr>
+                        <tr><td>Reverbnation</td><td>Supported via DefaultExtractors</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Events -->
+            <section class="doc-section reveal" id="events">
+                <h2>Event Reference</h2>
+
+                <h3>Discord Client Events</h3>
+                <table class="data-table">
+                    <thead><tr><th>Event</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>messageCreate</td><td>Main command dispatcher. Handles prefix and @mention triggers, anti-spam checks, permission validation, and command execution. Supports custom per-guild prefixes.</td></tr>
+                        <tr><td>interactionCreate</td><td>Handles component interactions (buttons, dropdowns, modals) triggered by bot messages. Routes to the appropriate handler based on customId.</td></tr>
+                        <tr><td>guildCreate</td><td>Fires when the bot joins a new server. Creates the private snax-log text channel and sends a welcome message.</td></tr>
+                        <tr><td>ready</td><td>Fires once on bot login. Logs a confirmation with the bot's username.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Music Player Events</h3>
+                <table class="data-table">
+                    <thead><tr><th>Event</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>playerStart</td><td>Fired when a new track begins playback. Sends a Now Playing embed and interactive queue management buttons. Marks previous embeds as expired.</td></tr>
+                        <tr><td>emptyQueue</td><td>Fired when the queue is exhausted. Notifies the channel that triggered the last play command.</td></tr>
+                        <tr><td>error</td><td>Handles audio extraction and playback errors. Logs the error and notifies the channel with a user-friendly message.</td></tr>
+                        <tr><td>disconnect</td><td>Handles unexpected disconnections from voice channels gracefully.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Utility Modules -->
+            <section class="doc-section reveal" id="utils">
+                <h2>Utility Modules</h2>
+
+                <h3>utils/permissions.js</h3>
+                <table class="data-table">
+                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>hasPermission(message, commandName)</td><td>Returns true if the message author is allowed to run the given command, based on the RBAC group the command belongs to.</td></tr>
+                        <tr><td>hasGroup(message, groupName)</td><td>Returns true if the message author belongs to the given permission group. Used by antiSpam.js to check BypassExe / SupBypass membership.</td></tr>
+                        <tr><td>addTarget(guildId, groupName, targetId)</td><td>Adds a role/user ID to a permission group. For AdminExe, places the target in a 10-minute pending queue. Returns: true | false | 'already_admin' | 'pending'</td></tr>
+                        <tr><td>removeTarget(guildId, groupName, targetId)</td><td>Removes a role/user ID from a permission group. Also clears pendingAdminExe entries when removing AdminExe.</td></tr>
+                        <tr><td>checkManagerHierarchy(message, targetMember)</td><td>For ManagerExe holders (not AdminExe), enforces that they can only act on users with a lower highest-role position.</td></tr>
+                        <tr><td>getGuildPrefix / setGuildPrefix</td><td>Reads or writes the custom command prefix for a specific guild.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>utils/antiSpam.js</h3>
+                <table class="data-table">
+                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>checkSpam(message)</td><td>Evaluates message frequency for the author using an in-memory rolling window. Sends a warning or applies a 2-minute Discord timeout if thresholds are hit. Returns true if a timeout was applied (caller should abort command).</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>utils/serverLogger.js</h3>
+                <table class="data-table">
+                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>getOrCreateLogChannel(guild)</td><td>Finds or creates the private 'snax-log' text channel. @everyone is denied view/send; bot is allowed view/send/embed.</td></tr>
+                        <tr><td>sendGuildLog(guild, messageOrEmbed)</td><td>Posts a string or embed object to the guild's snax-log channel.</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>utils/logger.js</h3>
+                <p>Terminal logger with colour-coded output:</p>
+                <ul>
+                    <li><code>logger.success('...')</code> — Green</li>
+                    <li><code>logger.warn('...')</code> — Yellow</li>
+                    <li><code>logger.error('...')</code> — Red</li>
+                    <li><code>logger.info('...')</code> — Blue/White</li>
+                </ul>
+
+                <h3>music/searchPipeline.js</h3>
+                <table class="data-table">
+                    <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>resolveQuery(query)</td><td>Main entry point. Determines if input is a URL or text search, cleans YouTube URLs, calls the YouTube Data API v3, and returns a structured result with the resolved playable URL.</td></tr>
+                        <tr><td>cleanYouTubeUrl(url)</td><td>Strips radio-mix and tracking parameters from YouTube URLs. Converts Shorts URLs to standard watch URLs.</td></tr>
+                        <tr><td>getYouTubeVideoMetadata(videoId)</td><td>Fetches title, channel, thumbnail, and duration for a specific YouTube video ID using the YouTube Data API v3.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Adding Commands -->
+            <section class="doc-section reveal" id="adding-commands">
+                <h2>Adding New Commands</h2>
+                <p>Snax uses a dynamic command loader — adding a command requires only creating a new file. No manual registration is needed.</p>
+
+                <ol class="step-list">
+                    <li>Create a new <code>.js</code> file in the <code>commands/</code> directory. For music-related commands, use <code>music/commands/</code> instead.</li>
+                    <li>
+                        Export an object with at minimum:
+                        <pre><code>module.exports = {
+  name: 'mycommand',             // REQUIRED — command trigger name (lowercase)
+  aliases: ['mc', 'mycmd'],      // OPTIONAL — alternative trigger names
+  description: 'Does a thing',  // OPTIONAL — shown in help
+  async execute(message, args, client, player, config) {
+    // Your command logic here
+    message.reply('Hello!');
+  }
+};</code></pre>
+                    </li>
+                    <li>Restart the bot. The <code>commandHandler</code> will automatically detect and load the file.</li>
+                    <li>
+                        To require a permission group, add the command name to the appropriate group in <code>utils/permissions.js</code>:
+                        <pre><code>'VoiceExe': ['mute', 'unmute', ..., 'mycommand'],</code></pre>
+                        If the command is not listed in any group, it defaults to <strong>OwnerOnly</strong>.
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Dependencies -->
+            <section class="doc-section reveal" id="dependencies">
+                <h2>Dependencies</h2>
+                <table class="data-table">
+                    <thead><tr><th>Package</th><th>Version</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord API wrapper</td></tr>
+                        <tr><td>@discordjs/voice</td><td>^0.19.2</td><td>Voice channel audio streaming</td></tr>
+                        <tr><td>discord-player</td><td>^7.2.0</td><td>Music queue and player engine</td></tr>
+                        <tr><td>@discord-player/extractor</td><td>^7.2.0</td><td>Default audio extractors bundle</td></tr>
+                        <tr><td>discord-player-youtubei</td><td>^2.0.0</td><td>YouTubei.js extractor bridge</td></tr>
+                        <tr><td>youtubei.js</td><td>^17.0.1</td><td>YouTube internal API client</td></tr>
+                        <tr><td>dotenv</td><td>^17.4.2</td><td>.env file loader</td></tr>
+                        <tr><td>ffmpeg-static</td><td>^5.3.0</td><td>Bundled FFmpeg binary (no install)</td></tr>
+                        <tr><td>libsodium-wrappers</td><td>^0.8.4</td><td>Voice encryption (Opus codec)</td></tr>
+                        <tr><td>play-dl</td><td>^1.9.7</td><td>Fallback audio extraction</td></tr>
+                        <tr><td>youtube-dl-exec</td><td>^3.1.7</td><td>yt-dlp binary execution wrapper</td></tr>
+                        <tr><td>youtube-ext</td><td>^1.1.25</td><td>YouTube extraction fallback</td></tr>
+                        <tr><td>ytdl-core-discord</td><td>^1.3.1</td><td>Legacy YouTube downloader</td></tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <p><strong>yt-dlp</strong> must be installed separately and accessible in the system PATH. The YTDLPExtractor calls yt-dlp to bypass broken JavaScript cipher decryption.</p>
+                </div>
+            </section>
+
+            <!-- Known Limitations -->
+            <section class="doc-section reveal" id="limitations">
+                <h2>Known Limitations</h2>
+
+                <h3>YouTube API Quota</h3>
+                <p>The YouTube Data API v3 has a daily quota of 10,000 units per project. Each text-search call uses approximately 102 units (100 for search + 1 per video detail). If the quota is exceeded, the bot notifies the user and refuses to search until the quota resets (midnight Pacific Time). Direct URL playback is NOT affected by API quota.</p>
+
+                <h3>Shorts Auto-Conversion</h3>
+                <p>YouTube Shorts URLs (<code>youtube.com/shorts/&lt;id&gt;</code>) are automatically converted to standard watch URLs. Shorts are also filtered out of text-search results — any video ≤ 60 seconds is skipped.</p>
+
+                <h3>Pending AdminExe</h3>
+                <p>AdminExe grants have a mandatory 10-minute delay before taking effect. This is intentional and cannot be bypassed (except by the server owner).</p>
+
+                <h3>Purge Age Limit</h3>
+                <p>Discord's API does not allow bulk-deleting messages older than 14 days. The <code>$purge</code> command will skip or fail on older messages.</p>
+
+                <h3>Required Discord Intents</h3>
+                <p>The bot requires these Privileged Intents enabled in the Developer Portal under your application's settings:</p>
+                <ul>
+                    <li><strong>Message Content Intent</strong></li>
+                    <li><strong>Server Members Intent</strong> (for role checks)</li>
+                </ul>
+
+                <h3>Local Data Storage</h3>
+                <p>The <code>data/permissions.json</code> file is stored locally on the host machine and is not synced to any external database. Back it up regularly.</p>
+
+                <div class="info-box">
+                    <p>The bot is still under active development. Features marked with <code>(TODO)</code> in the source code may be incomplete or subject to change.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
+                <h2>SNAX</h2>
+            </div>
+            <div class="footer-links">
+                <a href="commands.html">Commands</a>
+                <a href="documentation.html">Documentation</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Active nav link highlight on scroll
+        const sections = document.querySelectorAll('.doc-section');
+        const navLinks = document.querySelectorAll('.doc-nav a');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    const id = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.doc-nav a[href="#${id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

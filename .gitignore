@@ -50,3 +50,5 @@ cursor/*
 .env.production.local
 *.env
 *.env.*
+# Deployment files
+docs.txt
