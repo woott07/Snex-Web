@@ -234,7 +234,7 @@
         <div class="hero-content">
             <img src="logo.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             <h1 class="load-reveal-2">Documentation</h1>
-            <p class="load-reveal-3">Everything you need to set up, configure, and extend SNAX. Version 1.0.0.</p>
+            <p class="load-reveal-3">Everything you need to set up, configure, and extend SNAX. Version 1.1.0.</p>
             <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn-primary load-pop">
                 Add to Server
             </a>
@@ -258,7 +258,8 @@
                 <li><a href="#utils" id="nav-utils">Utility Modules</a></li>
                 <li><a href="#adding-commands" id="nav-adding-commands">Adding New Commands</a></li>
                 <li><a href="#dependencies" id="nav-dependencies">Dependencies</a></li>
-                <li><a href="#limitations" id="nav-limitations">Known Limitations</a></li>
+                <li><a href="#limitations" id="nav-limitations">Known Notes &amp; Limitations</a></li>
+                <li><a href="#recent-updates" id="nav-recent-updates">Recent Updates</a></li>
             </ul>
         </aside>
 
@@ -419,10 +420,10 @@ LAVALINK_SECURE=true</code></pre>
                     <tbody>
                         <tr><td>Default</td><td>play, skip, queue, ping, help, hello, nowplaying, volume, pause, resume, prev, remove, clear, shuffle, loop, loopQ, autoplay, stop, join, leave</td></tr>
                         <tr><td>VoiceExe</td><td>mute, unmute, deafen, undeafen, dragreq, addme</td></tr>
-                        <tr><td>setNickExe</td><td>setnick</td></tr>
+                        <tr><td>setNickExe</td><td>setnick, remnick</td></tr>
                         <tr><td>ChatExe</td><td>purge, timeout</td></tr>
                         <tr><td>ManagerExe</td><td>ban, unban, kick (ManagerExe users can also assign: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove)</td></tr>
-                        <tr><td>AdminExe</td><td>All of the above PLUS all admin/assignment commands: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass, setprefix, remprefix</td></tr>
+                        <tr><td>AdminExe</td><td>All of the above PLUS all admin/assignment commands: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass, setprefix, remprefix, fetch</td></tr>
                         <tr><td>BypassExe</td><td>Anti-spam extended limit (15 warns / 20 timeout, vs 4/7 default)</td></tr>
                         <tr><td>SupBypass</td><td>Total anti-spam immunity (no warnings or timeouts ever applied)</td></tr>
                         <tr><td>OwnerOnly</td><td>Commands not in any group — only Server/Bot Owners can use them.</td></tr>
@@ -640,6 +641,27 @@ LAVALINK_SECURE=true</code></pre>
 
                 <h3>Local Data Storage</h3>
                 <p>Guild permissions are stored in <code>data/permissions.json</code> on the local host.</p>
+            </section>
+
+            <!-- Recent Updates -->
+            <section class="doc-section reveal" id="recent-updates">
+                <h2>Recent Updates (Version 1.1.0)</h2>
+                <p>The following features, optimizations, and bug fixes were introduced in Version 1.1.0:</p>
+                <ul>
+                    <li><strong>New Command: <code>$remnick</code></strong> — Added to the nickname group (<code>setNickExe</code>). Resets the nickname of the bot or the mentioned user back to their default username.</li>
+                    <li><strong>New Command: <code>$fetch</code></strong> — Added to the admin group (<code>AdminExe</code>). Queries the bot permissions assigned directly to a user/role or inherited via roles. Returns <code>! Dev !</code> if the query target is the owner defined in the <code>.env</code> file.</li>
+                    <li><strong>Robust Exe Assignments</strong> — Refactored all 16 permission management commands to support both user/role mentions and raw IDs, resolving members dynamically from the Discord API.</li>
+                    <li><strong>Proactive Role Hierarchy Warnings</strong> — Added startup and server-join checks that post a warning in <code>#snax-log</code> if the bot's role is below other roles in the server hierarchy, prompting administrators to drag it to the top.</li>
+                    <li><strong>Non-Music Bug Fixes</strong>:
+                        <ul>
+                            <li>Moved anti-spam checks to only monitor command executions rather than general messages in the server.</li>
+                            <li>Capped the purge command message fetch limit to prevent RangeErrors when fetching exactly 100 messages.</li>
+                            <li>Added hierarchy validation checks to the timeout command.</li>
+                            <li>Fixed requester VC validation upon target acceptance in dragreq.</li>
+                            <li>Fixed setnick role check when targeting the bot itself.</li>
+                        </ul>
+                    </li>
+                </ul>
             </section>
         </main>
     </div>

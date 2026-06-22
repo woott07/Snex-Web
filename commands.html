@@ -157,6 +157,14 @@
                 <div class="cmd-syntax">$setnick @user &lt;name&gt;</div>
                 <div class="cmd-desc">Change the nickname of the mentioned user. setNickExe holders can only change nicknames of users below their highest role. Admins can change any user's nickname.</div>
             </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$remnick</div>
+                <div class="cmd-desc">Remove the bot's own custom nickname, resetting it to default.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$remnick @user</div>
+                <div class="cmd-desc">Remove the nickname of the mentioned user.</div>
+            </div>
         </div>
 
         <!-- Chat Management -->
@@ -230,6 +238,10 @@
             <div class="cmd-item">
                 <div class="cmd-syntax">$SupBypass / $remSupBypass @role/@user</div>
                 <div class="cmd-desc">Grant or revoke total immunity from the anti-spam filter. No warnings or timeouts will ever be applied.</div>
+            </div>
+            <div class="cmd-item">
+                <div class="cmd-syntax">$fetch @role/@user</div>
+                <div class="cmd-desc">Check direct/inherited permissions of a role or user. If the target is the owner specified in the <code>.env</code> file, it returns <code>! Dev !</code>.</div>
             </div>
             <div class="cmd-item">
                 <div class="cmd-syntax">$setprefix &lt;new_prefix&gt;</div>
