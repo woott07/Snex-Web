@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SNAX | Documentation</title>
-    <meta name="description" content="Full technical documentation for SNAX — setup, configuration, permission system, anti-spam, music system, and more.">
+    <title>SMX | Documentation</title>
+    <meta name="description" content="Technical setup, configuration, and structural documentation for Snax and Musico bots.">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Doc-specific additions */
@@ -55,7 +55,7 @@
         .doc-layout {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 4rem 8rem;
+            padding: 1rem 4rem 8rem;
             display: flex;
             gap: 5rem;
         }
@@ -218,459 +218,488 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-container">
-                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
-                <span class="logo">SNAX</span>
+                <img src="logo.jpg" alt="SMX Logo" class="logo-img">
+                <span class="logo">SMX</span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="commands.html">Commands</a></li>
                 <li><a href="documentation.html">Documentation</a></li>
-                <li><a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="nav-btn">Add to Discord</a></li>
+                <li><a href="https://discord.gg/rMasx9HgJJ" target="_blank" class="nav-btn">Join Server</a></li>
             </ul>
         </div>
     </nav>
 
-    <header class="hero doc-hero">
+    <header class="hero doc-hero" style="min-height: auto; padding-top: 140px; padding-bottom: 2rem;">
         <div class="hero-content">
-            <img src="logo.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            <h1 class="load-reveal-2">Documentation</h1>
-            <p class="load-reveal-3">Everything you need to set up, configure, and extend SNAX. Version 1.1.0.</p>
-            <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn-primary load-pop">
-                Add to Server
-            </a>
+            <h1 class="load-reveal-1">Technical Documentation</h1>
+            <p class="load-reveal-2" style="max-width: 700px; margin: 0 auto 1.5rem;">Guides for setup, installation, configurations, and core codebase architectures. Select your bot below.</p>
         </div>
     </header>
 
-    <div class="doc-layout">
+    <div class="bot-switcher load-reveal-3">
+        <button class="switcher-btn active" data-bot="snax">Snax (Music)</button>
+        <button class="switcher-btn" data-bot="musico">Musico (Security)</button>
+    </div>
 
-        <!-- Sidebar Navigation -->
-        <aside class="doc-nav">
-            <p class="doc-nav-title">On this page</p>
-            <ul>
-                <li><a href="#overview" id="nav-overview">Overview</a></li>
-                <li><a href="#project-structure" id="nav-project-structure">Project Structure</a></li>
-                <li><a href="#setup" id="nav-setup">Setup &amp; Installation</a></li>
-                <li><a href="#configuration" id="nav-configuration">Configuration</a></li>
-                <li><a href="#permissions" id="nav-permissions">Permission System</a></li>
-                <li><a href="#antispam" id="nav-antispam">Anti-Spam System</a></li>
-                <li><a href="#music" id="nav-music">Music System</a></li>
-                <li><a href="#events" id="nav-events">Event Reference</a></li>
-                <li><a href="#utils" id="nav-utils">Utility Modules</a></li>
-                <li><a href="#adding-commands" id="nav-adding-commands">Adding New Commands</a></li>
-                <li><a href="#dependencies" id="nav-dependencies">Dependencies</a></li>
-                <li><a href="#limitations" id="nav-limitations">Known Notes &amp; Limitations</a></li>
-                <li><a href="#recent-updates" id="nav-recent-updates">Recent Updates</a></li>
-            </ul>
-        </aside>
+    <!-- ==========================================
+         SNAX DOCUMENTATION VIEW
+         ========================================== -->
+    <div id="snax-view" class="bot-view active">
+        <div class="doc-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="doc-nav">
+                <p class="doc-nav-title">Snax Documentation</p>
+                <ul>
+                    <li><a href="#snax-overview" id="nav-snax-overview">Overview</a></li>
+                    <li><a href="#snax-structure" id="nav-snax-structure">Project Structure</a></li>
+                    <li><a href="#snax-setup" id="nav-snax-setup">Setup &amp; Installation</a></li>
+                    <li><a href="#snax-configuration" id="nav-snax-configuration">Configuration</a></li>
+                    <li><a href="#snax-music" id="nav-snax-music">Music System (Lavalink)</a></li>
+                    <li><a href="#snax-antispam" id="nav-snax-antispam">Anti-Spam Filter</a></li>
+                    <li><a href="#snax-events" id="nav-snax-events">Event Reference</a></li>
+                    <li><a href="#snax-utils" id="nav-snax-utils">Utility Modules</a></li>
+                    <li><a href="#snax-dependencies" id="nav-snax-dependencies">Dependencies</a></li>
+                    <li><a href="#snax-limitations" id="nav-snax-limitations">Notes &amp; Limitations</a></li>
+                </ul>
+            </aside>
 
-        <!-- Main Content -->
-        <main class="doc-content">
+            <!-- Main Content -->
+            <main class="doc-content">
+                <!-- Overview -->
+                <section class="doc-section reveal" id="snax-overview">
+                    <h2>Overview</h2>
+                    <p>Snax is a high-performance, robust, and clean Discord music bot built on top of <strong>Discord.js v14</strong>. It utilizes <strong>Lavalink</strong> (via the Kazagumo wrapper and Shoukaku connector) to deliver ultra-low latency, crystal-clear audio streaming.</p>
+                    <p>By offloading audio decoding and streaming tasks to a dedicated Lavalink node, Snax achieves maximum resource efficiency, stability, and zero stuttering, even when playing large playlists. It supports hybrid controls: classic prefix commands (default: <code>$</code>) and modern Application slash (/) commands.</p>
+                    <div class="info-box" style="border-left-color: var(--accent-snax);">
+                        <p><strong>Primary Function:</strong> Dedicated Music Playback &amp; Controller UI</p>
+                        <p><strong>Default Prefix:</strong> <code>$</code> (customizable per-server using <code>$setprefix</code>)</p>
+                    </div>
+                </section>
 
-            <!-- Overview -->
-            <section class="doc-section reveal" id="overview">
-                <h2>Overview</h2>
-                <p>Snax is a highly modular, multi-purpose Discord bot built with <strong>discord.js v14</strong>. It combines a full-featured music player powered by <strong>Lavalink</strong>, a rich role-based permission system, server moderation tools, voice management utilities, and smart anti-spam protection — all in one lightweight, easy-to-extend package.</p>
-                <div class="info-box">
-                    <p><strong>Invite Link:</strong> <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank">Add to Discord</a></p>
-                    <p><strong>Default Prefix:</strong> <code>$</code> — customizable per-server with <code>$setprefix</code>, or reset with <code>$remprefix</code>. You can trigger commands by @mentioning the bot, using the prefix, or via slash (/) commands for all music features.</p>
-                </div>
-            </section>
-
-            <!-- Project Structure -->
-            <section class="doc-section reveal" id="project-structure">
-                <h2>Project Structure</h2>
-                <pre><code>Snax-Bot/
-├── index.js                  — Entry point. Creates Discord client, loads
-│                               handlers, Lavalink music player, and logs in.
+                <!-- Project Structure -->
+                <section class="doc-section reveal" id="snax-structure">
+                    <h2>Project Structure</h2>
+                    <pre><code>Snax-Bot/
+├── index.js                  — App bootstrap and client login
 ├── config/
-│   ├── config.json           — Main runtime configuration (prefix, volume, etc.)
-│   ├── config.js             — Loader that merges .env with config.json
-│   └── slashOptionsMap.js    — Slash command options config for music commands
-├── commands/                 — All non-music prefix commands (39 files)
-├── lavalink_music/           — Lavalink music integration using Kazagumo/Shoukaku
-│   ├── player.js             — Initialises Kazagumo player, registers Lavalink
-│   │                           events, and loads music commands into the client.
-│   ├── interaction.js        — Controller button component interaction handler
-│   ├── embeds.js             — Embed builders for Now Playing / Queue UI
-│   ├── commands/             — 13 music-specific commands (play, loop, loopQ, etc.)
-│   └── events/               — Player lifecycle events (playerStart, playerEmpty, etc.)
-├── events/                   — Discord client events (messageCreate, ready, etc.)
+│   ├── config.json           — Default configuration settings
+│   ├── config.js             — Environment wrapper merging config with .env
+│   ├── slashOptionsMap.js    — Options layout for slash commands
+│   └── activity.json         — Status activity definitions
+├── lavalink_music/           — Music sub-system module
+│   ├── commands/             — Music command script executors (13 commands)
+│   ├── events/               — Lavalink Node and player event listeners
+│   ├── embeds.js             — UI Builders for playback controller embeds
+│   ├── interaction.js        — Controller button component interaction handlers
+│   └── player.js             — Connection configurations and Kazagumo player manager
+├── events/                   — Client-wide Discord gateway events
+├── utils/                    — Core utilities
+│   ├── antiSpam.js           — rolling-window spam prevention algorithm
+│   ├── serverLogger.js       — Auditing channel creation & log logger
+│   ├── globalLogger.js       — Home server log manager (tracks bot status)
+│   ├── logger.js             — Colorized terminal logging utilities
+│   ├── slashDeploy.js        — Slash commands publisher API
+│   └── voiceCheck.js         — Voice channel state validator
+├── install.bat               — 1-click Windows installer script
+└── setup_mac.sh              — 1-click macOS/Linux installation script</code></pre>
+                </section>
+
+                <!-- Setup & Installation -->
+                <section class="doc-section reveal" id="snax-setup">
+                    <h2>Setup &amp; Installation</h2>
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li><strong>Node.js v18 or higher</strong> — <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
+                        <li><strong>Discord Bot Token</strong> — <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
+                        <li><strong>Lavalink Server Node</strong> — self-hosted or public node credentials</li>
+                    </ul>
+
+                    <h3>Installation Steps</h3>
+                    <ol class="step-list">
+                        <li>
+                            <strong>Run Setup script:</strong><br>
+                            - Windows: Double-click <code>install.bat</code><br>
+                            - macOS/Linux: Run <code>bash setup_mac.sh</code> in terminal
+                        </li>
+                        <li>
+                            <strong>Configure `.env` settings:</strong> Configure your secret tokens and Lavalink node details in the newly created <code>.env</code> file (see Configuration section).
+                        </li>
+                        <li>
+                            <strong>Start the bot:</strong> Execute <code>node index.js</code> in the console.
+                        </li>
+                    </ol>
+                </section>
+
+                <!-- Configuration -->
+                <section class="doc-section reveal" id="snax-configuration">
+                    <h2>Configuration</h2>
+                    <h3>Environment Secrets (.env)</h3>
+                    <pre><code>Bot_Token=YOUR_DISCORD_BOT_TOKEN
+OWNER_ID=YOUR_USER_ID
+LAVALINK_HOST=LAVALINK_NODE_IP_OR_HOST
+LAVALINK_PORT=LAVALINK_NODE_PORT
+LAVALINK_PASSWORD=LAVALINK_NODE_PASSWORD
+LAVALINK_SECURE=true_OR_false</code></pre>
+
+                    <h3>Runtime Settings (config/config.json)</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Field</th><th>Default</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>prefix</td><td>"$"</td><td>Default prefix for text commands.</td></tr>
+                            <tr><td>defaultVolume</td><td>100</td><td>Starting volume scale (0-100).</td></tr>
+                            <tr><td>leaveOnEmpty</td><td>true</td><td>Leave VC when all other members disconnect.</td></tr>
+                            <tr><td>leaveOnEmptyCooldown</td><td>30000</td><td>Cooldown in ms before leaving empty VC.</td></tr>
+                            <tr><td>leaveOnEnd</td><td>false</td><td>Leave VC when the queue finishes.</td></tr>
+                            <tr><td>selfDeaf</td><td>true</td><td>Deafens the bot to reduce bandwidth.</td></tr>
+                            <tr><td>embed.color</td><td>"#5865F2"</td><td>Primary hex color used for rich embeds.</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Music System -->
+                <section class="doc-section reveal" id="snax-music">
+                    <h2>Music System (Lavalink)</h2>
+                    <p>The music system runs independently inside the <code>lavalink_music/</code> subsystem, leveraging Shoukaku and Kazagumo wrappers. This architecture abstracts node management and queue handling.</p>
+                    
+                    <h3>Audio Playback Pipeline</h3>
+                    <ul>
+                        <li><strong>Command:</strong> The user executes <code>$play &lt;query&gt;</code>.</li>
+                        <li><strong>VC Check:</strong> <code>voiceCheck.js</code> ensures the member and bot are in compatible voice channels.</li>
+                        <li><strong>Player Resolve:</strong> Retrieves the existing player instance or initializes one using <code>player.createPlayer()</code>.</li>
+                        <li><strong>Track Search:</strong> Kazagumo queries Lavalink. If a playlist is resolved, all tracks load. YouTube Shorts are converted automatically.</li>
+                        <li><strong>Lavalink Streaming:</strong> Lavalink decodes and streams the track directly to Discord's voice servers, avoiding server CPU bottle-necking.</li>
+                    </ul>
+
+                    <h3>Interactive Controller Cards</h3>
+                    <p>When a track begins playing, the bot sends an embed controller interface. Users can interact via buttons:</p>
+                    <ul>
+                        <li>⏯️ <strong>Play/Pause:</strong> Toggles current track pause state.</li>
+                        <li>⏭️ <strong>Skip:</strong> Plays the next queued song.</li>
+                        <li>⏹️ <strong>Stop:</strong> Clears queue, stops player, and disconnects.</li>
+                        <li>🔄 <strong>Loop/LoopQ:</strong> Loops track or loop queue.</li>
+                        <li>🔀 <strong>Shuffle:</strong> Re-orders the queue.</li>
+                        <li>➕ <strong>Autoplay:</strong> Automates endless queue generation.</li>
+                    </ul>
+                </section>
+
+                <!-- Anti-Spam Filter -->
+                <section class="doc-section reveal" id="snax-antispam">
+                    <h2>Anti-Spam System</h2>
+                    <p>An in-memory rolling 10-second window tracks message frequency. If a user exceeds threshold limits executing commands, the bot penalizes them.</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>User Tier</th><th>Warning (10s)</th><th>Timeout Penalty (10s)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Normal User</td><td>4 commands</td><td>7 commands (2-minute timeout)</td></tr>
+                            <tr><td>BypassExe Holders</td><td>15 commands</td><td>20 commands (2-minute timeout)</td></tr>
+                            <tr><td>SupBypass / Admins / Owners</td><td>Immune</td><td>Immune (No limits applied)</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Event Reference -->
+                <section class="doc-section reveal" id="snax-events">
+                    <h2>Event Reference</h2>
+                    <h3>Discord Client Gateway Events</h3>
+                    <ul>
+                        <li><strong>ready:</strong> Establishes activity presence; fetches application owner ID dynamically.</li>
+                        <li><strong>messageCreate:</strong> Evaluates prefix/mentions, runs anti-spam filters, checks default command group mappings, and executes commands.</li>
+                        <li><strong>interactionCreate:</strong> Handles slash commands and interactive buttons.</li>
+                        <li><strong>guildCreate:</strong> Automatically establishes a private <code>#snax-log</code> channel on server entry.</li>
+                    </ul>
+
+                    <h3>Lavalink Player Lifecycle Events</h3>
+                    <ul>
+                        <li><strong>playerStart:</strong> Fires when a track begins, dispatching the controller embed interface.</li>
+                        <li><strong>playerEmpty:</strong> Fires when the queue ends, alerting the text channel.</li>
+                        <li><strong>error:</strong> Logs node connection exceptions.</li>
+                    </ul>
+                </section>
+
+                <!-- Utility Modules -->
+                <section class="doc-section reveal" id="snax-utils">
+                    <h2>Utility Modules</h2>
+                    <ul>
+                        <li><strong>utils/permissions.js:</strong> Handles local prefix cache settings. Sets up default group access (which maps <code>@everyone</code> for music).</li>
+                        <li><strong>utils/antiSpam.js:</strong> Rate-limiting tracker maps.</li>
+                        <li><strong>utils/serverLogger.js:</strong> Establishes private channel logging workflows.</li>
+                        <li><strong>utils/voiceCheck.js:</strong> Ensures users are in a voice channel before sending playback instructions.</li>
+                    </ul>
+                </section>
+
+                <!-- Dependencies -->
+                <section class="doc-section reveal" id="snax-dependencies">
+                    <h2>Dependencies</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Package</th><th>Required Version</th><th>Purpose</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord gateway API integration</td></tr>
+                            <tr><td>dotenv</td><td>^17.4.2</td><td>Loads variables from local .env environment</td></tr>
+                            <tr><td>kazagumo</td><td>^3.4.3</td><td>Lavalink queue controller &amp; track parser</td></tr>
+                            <tr><td>shoukaku</td><td>^4.3.0</td><td>Lavalink WebSocket wrapper connector</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Notes & Limitations -->
+                <section class="doc-section reveal" id="snax-limitations">
+                    <h2>Notes &amp; Limitations</h2>
+                    <ul>
+                        <li><strong>Voice State Permissions:</strong> Ensure your bot application has the Privileged <code>Voice State Intent</code> enabled in the Discord Developer Portal, alongside <code>Message Content</code>.</li>
+                        <li><strong>Lavalink Node:</strong> Snax relies on an active Lavalink server node. If the node falls offline, music commands will fail with connection exception logs.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MUSICO DOCUMENTATION VIEW
+         ========================================== -->
+    <div id="musico-view" class="bot-view">
+        <div class="doc-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="doc-nav">
+                <p class="doc-nav-title">Musico Documentation</p>
+                <ul>
+                    <li><a href="#musico-overview" id="nav-musico-overview">Overview</a></li>
+                    <li><a href="#musico-structure" id="nav-musico-structure">Project Structure</a></li>
+                    <li><a href="#musico-setup" id="nav-musico-setup">Setup &amp; Installation</a></li>
+                    <li><a href="#musico-configuration" id="nav-musico-configuration">Configuration System</a></li>
+                    <li><a href="#musico-permissions" id="nav-musico-permissions">Permission System (RBAC)</a></li>
+                    <li><a href="#musico-antispam" id="nav-musico-antispam">Anti-Spam System</a></li>
+                    <li><a href="#musico-verification" id="nav-musico-verification">Onboarding Verification</a></li>
+                    <li><a href="#musico-logging" id="nav-musico-logging">Server Logging (#snax-log)</a></li>
+                    <li><a href="#musico-events" id="nav-musico-events">Event Reference</a></li>
+                    <li><a href="#musico-utils" id="nav-musico-utils">Utility Modules</a></li>
+                    <li><a href="#musico-adding-commands" id="nav-musico-adding-commands">Adding New Commands</a></li>
+                    <li><a href="#musico-dependencies" id="nav-musico-dependencies">Dependencies</a></li>
+                    <li><a href="#musico-faq" id="nav-musico-faq">Troubleshooting &amp; FAQ</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="doc-content">
+                <!-- Overview -->
+                <section class="doc-section reveal" id="musico-overview">
+                    <h2>Overview</h2>
+                    <p>Musico is a highly modular, security-focused Discord bot built with <strong>discord.js v14</strong>. It integrates a robust member onboarding/verification workflow system, custom Role-Based Access Control (RBAC) permission database, server moderation tools, voice channel management utilities, and proactive anti-spam protection — all operating from a lightweight, local file-based data engine.</p>
+                    <div class="info-box" style="border-left-color: var(--accent-musico);">
+                        <p><strong>Primary Function:</strong> Granular Administration, Verification, and Moderation</p>
+                        <p><strong>Default Prefix:</strong> <code>!</code> (customizable per-server using <code>!setprefix</code>)</p>
+                    </div>
+                </section>
+
+                <!-- Project Structure -->
+                <section class="doc-section reveal" id="musico-structure">
+                    <h2>Project Structure</h2>
+                    <pre><code>musico/
+├── index.js                  — Entry point. Loads handlers and client login
+├── package.json              — Node project definition
+├── README.md                 — High-level summary guide
+├── validate_bot.js           — Automated procedure auditing commands & permissions
+├── .env                      — Hidden credential settings (tokens, owners)
+├── config/
+│   ├── config.json           — Configurations (prefix, onboarding strictness, questions)
+│   └── config.js             — Loader merging config.json with .env values
 ├── handlers/
-│   ├── commandHandler.js     — Dynamically loads all files from commands/
-│   └── eventHandler.js       — Dynamically loads all files from events/
+│   ├── commandHandler.js     — Dynamically loads commands/ files
+│   └── eventHandler.js       — Dynamically registers events/ files
+├── commands/                 — Directory housing the 40 individual commands
+├── events/                   — gateway trigger handlers (guildMemberAdd, interactionCreate...)
 ├── utils/
-│   ├── permissions.js        — RBAC engine (groups, DB read/write, checks, bot owner)
-│   ├── antiSpam.js           — Rolling-window spam detection & auto-timeout
-│   ├── serverLogger.js       — Creates/writes to the private snax-log channel
-│   ├── logger.js             — Terminal logger (success/warn/error)
-│   ├── voiceCheck.js         — Voice-channel presence validation helper
-│   └── slashDeploy.js        — Deploys slash commands to Discord globally
-├── data/
-│   └── permissions.json      — Auto-generated guild permission database (JSON)
-├── install.bat               — One-click Windows installer
-├── setup_mac.sh              — macOS setup script
-├── package.json
-└── .env                      — Secret tokens (never commit this file!)</code></pre>
-            </section>
+│   ├── permissions.js        — RBAC DB manager, prefix configuration, hierarchy check
+│   ├── permissionCommandHelper.js — Resolves targets and updates group assignments
+│   ├── antiSpam.js           — Command rate-limiter, warnings, auto-timeouts
+│   ├── serverLogger.js       — Creates & logs rich embeds to #snax-log
+│   ├── logger.js             — Local terminal console log coloring
+│   └── verification.js       — Questionnaires, verification chats, rules agreements
+└── data/
+    └── permissions.json      — Local database containing each server's settings</code></pre>
+                </section>
 
-            <!-- Setup -->
-            <section class="doc-section reveal" id="setup">
-                <h2>Setup &amp; Installation</h2>
+                <!-- Setup & Installation -->
+                <section class="doc-section reveal" id="musico-setup">
+                    <h2>Setup &amp; Installation</h2>
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li><strong>Node.js v18 or higher</strong></li>
+                        <li><strong>Gateway Intents:</strong> Enable <code>Message Content Intent</code> and <code>Server Members Intent</code> in your Discord Developer Portal application settings.</li>
+                    </ul>
 
-                <h3>Prerequisites</h3>
-                <ul>
-                    <li><strong>Node.js v18 or higher</strong> — <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
-                    <li><strong>Discord Bot Application &amp; token</strong> — <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
-                    <li><strong>Lavalink Server Node</strong> — either self-hosted, or a public host (like the default one configured).</li>
-                </ul>
+                    <h3>Setup Workflow</h3>
+                    <ol class="step-list">
+                        <li>Install project dependencies: <code>npm install</code>.</li>
+                        <li>Create a <code>.env</code> file in the project root:
+                            <pre><code>Bot_Token=YOUR_DISCORD_BOT_TOKEN
+OWNER_ID=YOUR_USER_ID
+HOME_SERVER_ID=YOUR_HOME_SERVER_ID</code></pre>
+                        </li>
+                        <li>Audit command configurations and registrations:
+                            <pre><code>npm run validate</code></pre>
+                        </li>
+                        <li>Run the bot application: <code>npm start</code> (or <code>node index.js</code>).</li>
+                    </ol>
+                </section>
 
-                <h3>Windows</h3>
-                <ol class="step-list">
-                    <li>Double-click <code>install.bat</code>. This runs <code>npm install</code>, creates your <code>.env</code>, and configures default settings automatically.</li>
-                    <li>Open <code>.env</code> in any text editor and fill in your credentials (see Configuration section).</li>
-                    <li>Run the bot: <code>node index.js</code></li>
-                </ol>
-
-                <h3>macOS / Linux</h3>
-                <ol class="step-list">
-                    <li>Run the setup script: <code>bash setup_mac.sh</code></li>
-                    <li>Fill in <code>.env</code> (see Configuration section).</li>
-                    <li>Run the bot: <code>node index.js</code></li>
-                </ol>
-
-                <h3>Successful Startup Output</h3>
-                <pre><code>[SUCCESS] Loaded 13 Lavalink music commands successfully!
-[SUCCESS] Registered 2 Kazagumo player events successfully!
-[SUCCESS] Loaded 39 commands successfully!
-[SUCCESS] Registered 4 client events successfully!
-🤖 Success! Logged in as Snax#XXXX
-👑 Successfully fetched application owner: DeveloperName
-[SUCCESS] Lavalink Node "HeavenCloud-Node" connected successfully!</code></pre>
-            </section>
-
-            <!-- Configuration -->
-            <section class="doc-section reveal" id="configuration">
-                <h2>Configuration</h2>
-
-                <h3>.env File (Secrets — Never Share)</h3>
-                <pre><code>Bot_Token=YOUR_DISCORD_BOT_TOKEN
-OWNER_ID=YOUR_DISCORD_USER_ID
-LAVALINK_HOST=lava-v4.ajieblogs.eu.org
-LAVALINK_PORT=443
-LAVALINK_PASSWORD=https://dsc.gg/ajidevserver
-LAVALINK_SECURE=true</code></pre>
-                <ul>
-                    <li><strong>Bot_Token</strong> — Your Discord bot token from the Developer Portal.</li>
-                    <li><strong>OWNER_ID</strong> — (Optional) Your Discord user ID to hardcode yourself as Bot Owner. If left blank, the bot will dynamically fetch your ID from Discord on boot.</li>
-                    <li><strong>LAVALINK_HOST</strong> — The IP/domain of your Lavalink node server.</li>
-                    <li><strong>LAVALINK_PORT</strong> — The port of your Lavalink node server.</li>
-                    <li><strong>LAVALINK_PASSWORD</strong> — The access password for your Lavalink node server.</li>
-                    <li><strong>LAVALINK_SECURE</strong> — Set to <code>true</code> if the node uses SSL/WSS, otherwise <code>false</code>.</li>
-                </ul>
-
-                <h3>config/config.json (Runtime Settings)</h3>
-                <pre><code>{
-  "prefix": "$",                   // Default command prefix for all servers.
-  "defaultVolume": 100,            // Starting playback volume (0–100).
-  "leaveOnEmpty": true,            // Leave voice channel when it becomes empty.
-  "leaveOnEmptyCooldown": 30000,   // Milliseconds to wait before leaving (30 s).
-  "leaveOnEnd": false,             // Stay in VC after the queue finishes.
-  "autoJoin": false,               // Auto-join on message (not implemented yet).
-  "selfDeaf": true,                // Bot deafens itself while in VC.
-  "embed": {
-    "color": "#5865F2",            // Hex colour for all bot embeds.
-    "showThumbnail": true,         // Show song thumbnail in Queue/Now Playing.
-    "showRequester": true          // Show who requested the song.
-  },
-  "maxQueueDisplay": 10,           // Max songs shown per queue page.
-  "permissions": {
-    "sameVoiceRequired": true,     // Users must be in same VC to control music.
-    "djRole": "",                  // Dedicated DJ role check (unused).
-    "adminBypass": true            // Admins bypass all voice checks.
-  }
+                <!-- Configuration System -->
+                <section class="doc-section reveal" id="musico-configuration">
+                    <h2>Configuration System</h2>
+                    <p>The configuration loader (<code>config/config.js</code>) dynamically merges environmental variables inside <code>.env</code> with options configured in <code>config/config.json</code>.</p>
+                    
+                    <h3>Verification Questionnaire Config</h3>
+                    <p>Inside <code>config.json</code>, the <code>verification</code> block defines the onboarding rules and multiple-choice questions structure:</p>
+                    <pre><code>"verification": {
+  "strictness": "HIGH",
+  "verifiedRole": "Verified",
+  "verificationChannel": "verify-here",
+  "rulesChannel": "rules",
+  "questions": [
+    {
+      "id": "rules_agree",
+      "type": "button",
+      "question": "Do you agree to respect server rules?",
+      "options": ["Yes, I agree", "No"],
+      "correctAnswer": "Yes, I agree"
+    }
+  ]
 }</code></pre>
-                <div class="info-box">
-                    <p>Per-server prefix overrides are stored automatically in <code>data/permissions.json</code> and take precedence over the global prefix in <code>config.json</code>.</p>
-                </div>
-            </section>
+                </section>
 
-            <!-- Permission System -->
-            <section class="doc-section reveal" id="permissions">
-                <h2>Permission System (RBAC)</h2>
-                <p>Snax uses a custom Role-Based Access Control (RBAC) system stored in <code>data/permissions.json</code>. Permissions are evaluated per-server (guild).</p>
+                <!-- Permission System (RBAC) -->
+                <section class="doc-section reveal" id="musico-permissions">
+                    <h2>Permission System (RBAC)</h2>
+                    <p>Permissions are checked dynamically from local JSON storage using hierarchy rules.</p>
+                    
+                    <h3>Hierarchy Resolution (Highest to Lowest)</h3>
+                    <ol>
+                        <li><strong>Bot Owner:</strong> Full bypass (bypasses spam, commands, rules checks).</li>
+                        <li><strong>Server Owner:</strong> Absolute bypass inside their guild.</li>
+                        <li><strong>AdminExe Holders:</strong> Bypass all command execution permissions.</li>
+                        <li><strong>Explicit Group Mappings:</strong> Matches user or role IDs inside the command's designated permission group.</li>
+                        <li><strong>Default Group:</strong> Matches if the group contains <code>@everyone</code>.</li>
+                        <li><strong>Denied:</strong> Execution rejected, warns the user.</li>
+                    </ol>
 
-                <h3>Priority Order</h3>
-                <ol class="step-list">
-                    <li><strong>Bot Owner</strong> — unrestricted access to everything (all servers).</li>
-                    <li><strong>Server Owner</strong> — unrestricted access to everything in their server.</li>
-                    <li><strong>AdminExe</strong> — bypasses all permission checks.</li>
-                    <li>Assigned permission group matching the command.</li>
-                    <li>@everyone (if Default group is set to @everyone).</li>
-                    <li>Denied — command blocked.</li>
-                </ol>
+                    <h3>Permission Groups &amp; Inheritance</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Group</th><th>Access Scope</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Default</td><td>General utilities (ping, help, hello).</td></tr>
+                            <tr><td>VoiceExe</td><td>Voice state modifications (mute, deafen, dragreq, addme).</td></tr>
+                            <tr><td>setNickExe</td><td>Nickname modifications (setnick, remnick).</td></tr>
+                            <tr><td>ChatExe</td><td>Local chat moderation (purge, timeout).</td></tr>
+                            <tr><td>ManagerExe</td><td>Bans, kicks, unbans. Can allocate lower permissions.</td></tr>
+                            <tr><td>AdminExe</td><td>Administrative configurations, prefixes, verification, promotions.</td></tr>
+                        </tbody>
+                    </table>
 
-                <h3>Bot Owner Privileges</h3>
-                <p>The Bot Owner gets absolute privilege override automatically. The bot queries the Discord API on boot to fetch your client owner ID. You can also override it explicitly in your <code>.env</code> file with the <code>OWNER_ID</code> variable. Bot Owners bypass all command permission checks and all anti-spam warning/timeout filters.</p>
+                    <h3>Security Cooldown Delay (pendingAdminExe)</h3>
+                    <p>To protect servers from rogue staff accounts, assigning a user or role to the <code>AdminExe</code> group does not grant permissions instantly. Instead:</p>
+                    <ul>
+                        <li>The target is cached in <code>pendingAdminExe</code> in <code>permissions.json</code>.</li>
+                        <li>A <strong>10-minute cooldown timer</strong> is initiated.</li>
+                        <li>The user must wait 10 minutes before their first subsequent command check activates their full <code>AdminExe</code> role privileges.</li>
+                        <li>AdminExe assignments can be revoked immediately (clearing the delay state).</li>
+                    </ul>
+                </section>
 
-                <h3>Permission Groups</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Group</th><th>Commands Unlocked</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Default</td><td>play, skip, queue, ping, help, hello, nowplaying, volume, pause, resume, prev, remove, clear, shuffle, loop, loopQ, autoplay, stop, join, leave</td></tr>
-                        <tr><td>VoiceExe</td><td>mute, unmute, deafen, undeafen, dragreq, addme</td></tr>
-                        <tr><td>setNickExe</td><td>setnick, remnick</td></tr>
-                        <tr><td>ChatExe</td><td>purge, timeout</td></tr>
-                        <tr><td>ManagerExe</td><td>ban, unban, kick (ManagerExe users can also assign: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove)</td></tr>
-                        <tr><td>AdminExe</td><td>All of the above PLUS all admin/assignment commands: VoiceExe, remVoiceExe, setNickExe, remNickExe, assign_default, default_remove, AdminExe, remAdminExe, ChatExe, remChatExe, ManagerExe, remManagerExe, BypassExe, remBypassExe, SupBypass, remSupBypass, setprefix, remprefix, fetch</td></tr>
-                        <tr><td>BypassExe</td><td>Anti-spam extended limit (15 warns / 20 timeout, vs 4/7 default)</td></tr>
-                        <tr><td>SupBypass</td><td>Total anti-spam immunity (no warnings or timeouts ever applied)</td></tr>
-                        <tr><td>OwnerOnly</td><td>Commands not in any group — only Server/Bot Owners can use them.</td></tr>
-                    </tbody>
-                </table>
+                <!-- Anti-Spam System -->
+                <section class="doc-section reveal" id="musico-antispam">
+                    <h2>Anti-Spam System</h2>
+                    <p>Monitors command triggers within a rolling 10-second window. Spam violations result in timeouts.</p>
+                    <ul>
+                        <li><strong>Normal Users:</strong> 4 commands triggers a Warning (auto-deleted in 5 seconds). 7 commands triggers a 2-minute timeout penalty.</li>
+                        <li><strong>BypassExe Users:</strong> 15 commands triggers warning, 20 triggers timeout.</li>
+                        <li><strong>Immunity:</strong> Server Owners, Bot Owner, AdminExe, ManagerExe, and SupBypass group holders bypass all rate-limits.</li>
+                    </ul>
+                </section>
 
-                <h3>AdminExe 10-Minute Cooldown</h3>
-                <p>When AdminExe is granted with <code>$AdminExe @target</code>, the target is placed in a <code>pendingAdminExe</code> queue with a 10-minute delay before becoming a full AdminExe. This prevents accidental instant privilege escalation. If <code>$remAdminExe</code> is called before the 10 minutes elapse, the pending entry is removed immediately.</p>
+                <!-- Onboarding Verification -->
+                <section class="doc-section reveal" id="musico-verification">
+                    <h2>Onboarding Verification</h2>
+                    <p>Protects server entries against automated spammers. Strictness levels determine member join flows:</p>
+                    <ul>
+                        <li><strong>OFF:</strong> Onboarding disabled.</li>
+                        <li><strong>LOW:</strong> Welcomes member and auto-assigns the verified role.</li>
+                        <li><strong>MEDIUM:</strong> Rules agreement button posted. Clicking rules button grants role.</li>
+                        <li><strong>HIGH:</strong> Creates temporary private channel <code>#verify-username</code>. Member clicks button to launch a questionnaire. Correct answers grant verified role; incorrect answers prompt "Retry". Channel deletes after 10-second countdown.</li>
+                        <li><strong>STRICT:</strong> Follows HIGH mode. Upon quiz completion, results are forwarded to <code>#snax-log</code> with <code>[Approve]</code> and <code>[Deny]</code> button panels. Staff must manually approve access.</li>
+                    </ul>
+                </section>
 
-                <h3>Data Storage Format</h3>
-                <pre><code>{
-  "&lt;guild_id&gt;": {
-    "Default": ["@everyone"],
-    "VoiceExe": ["&lt;role_or_user_id&gt;", ...],
-    "setNickExe": [...],
-    "ChatExe": [...],
-    "ManagerExe": [...],
-    "AdminExe": [...],
-    "pendingAdminExe": { "&lt;id&gt;": &lt;unix_timestamp_ms&gt; },
-    "BypassExe": [...],
-    "SupBypass": [...],
-    "customPrefix": "&lt;prefix&gt;"   // optional — only present when set
-  }
-}</code></pre>
-                <p>New guilds are initialised with <code>Default: ["@everyone"]</code> so music commands work for everyone out of the box.</p>
-            </section>
+                <!-- Server Logging -->
+                <section class="doc-section reveal" id="musico-logging">
+                    <h2>Server Logging (#snax-log)</h2>
+                    <p>Audit system tracking internal security actions. The bot automatically creates a private text channel named <code>snax-log</code> if it is missing.</p>
+                    <p><strong>Logged Events:</strong> Permission assignments/revocations, cooldown queues, timeout infractions, questionnaire logs, staff approvals/denials, and exception stack traces.</p>
+                </section>
 
-            <!-- Anti-Spam -->
-            <section class="doc-section reveal" id="antispam">
-                <h2>Anti-Spam System</h2>
-                <p>The bot monitors message frequency using an in-memory rolling-window counter. Each user's message timestamps are tracked over a <strong>10-second window</strong>.</p>
+                <!-- Event Reference -->
+                <section class="doc-section reveal" id="musico-events">
+                    <h2>Event Reference</h2>
+                    <ul>
+                        <li><strong>ready:</strong> Loads client application details and parses bot owner ID.</li>
+                        <li><strong>messageCreate:</strong> Parses prefix command targets, manages anti-spam limits, audits client authorizations, and executes commands.</li>
+                        <li><strong>guildCreate:</strong> Configures default DB options on joining new servers.</li>
+                        <li><strong>guildMemberAdd:</strong> Captures incoming members and starts the verification flow.</li>
+                        <li><strong>interactionCreate:</strong> Evaluates verification button responses and help menu category selection dropdowns.</li>
+                    </ul>
+                </section>
 
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Tier</th><th>Limit (10s window)</th><th>Action</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Normal user</td><td>4 messages</td><td>Warning sent (auto-deleted after 5s)</td></tr>
-                        <tr><td>Normal user</td><td>7 messages</td><td>2-minute Discord timeout applied</td></tr>
-                        <tr><td>BypassExe</td><td>15 messages</td><td>Warning sent</td></tr>
-                        <tr><td>BypassExe</td><td>20 messages</td><td>2-minute timeout applied</td></tr>
-                        <tr><td>SupBypass</td><td>No limit</td><td>Fully immune — no warnings or timeouts</td></tr>
-                        <tr><td>AdminExe</td><td>No limit</td><td>Immune</td></tr>
-                        <tr><td>ManagerExe</td><td>No limit</td><td>Immune</td></tr>
-                        <tr><td>Server Owner</td><td>No limit</td><td>Immune</td></tr>
-                        <tr><td>Bot Owner</td><td>No limit</td><td>Immune</td></tr>
-                    </tbody>
-                </table>
+                <!-- Utility Modules -->
+                <section class="doc-section reveal" id="musico-utils">
+                    <h2>Utility Modules</h2>
+                    <ul>
+                        <li><strong>utils/permissions.js:</strong> Integrates local data reads and writes to <code>permissions.json</code>.</li>
+                        <li><strong>utils/verification.js:</strong> Handles questionnaire prompts, private channel generation, role assignments, and approval panel embeds.</li>
+                        <li><strong>utils/antiSpam.js:</strong> Monitors command execution timestamps.</li>
+                    </ul>
+                </section>
 
-                <div class="info-box">
-                    <p>Only bot commands (prefix / @mention) are checked — regular chat messages are not affected by this filter.</p>
-                </div>
-            </section>
+                <!-- Adding New Commands -->
+                <section class="doc-section reveal" id="musico-adding-commands">
+                    <h2>Adding New Commands</h2>
+                    <ol class="step-list">
+                        <li>Create a new script file inside <code>commands/</code>.</li>
+                        <li>Implement standard command exports containing <code>name</code>, <code>description</code>, and <code>async execute(message, args, client, config)</code>.</li>
+                        <li>Map the command name to a specific permission group in <code>COMMAND_GROUPS</code> inside <code>utils/permissions.js</code> (if omitted, defaults to OwnerOnly).</li>
+                        <li>Verify structure using <code>npm run validate</code> and restart.</li>
+                    </ol>
+                </section>
 
-            <!-- Music System -->
-            <section class="doc-section reveal" id="music">
-                <h2>Music System (Lavalink)</h2>
-                <p>The music system is isolated in the <code>lavalink_music/</code> directory and utilizes <strong>Lavalink</strong> (via <strong>Kazagumo</strong> &amp; **Shoukaku** wrappers) for low-overhead audio streaming.</p>
+                <!-- Dependencies -->
+                <section class="doc-section reveal" id="musico-dependencies">
+                    <h2>Dependencies</h2>
+                    <ul>
+                        <li><code>discord.js</code> (v14.15.3 or higher)</li>
+                        <li><code>dotenv</code> (v16.4.5 or higher)</li>
+                    </ul>
+                </section>
 
-                <h3>Audio Playback Pipeline</h3>
-                <ol class="step-list">
-                    <li>User types <code>$play &lt;query&gt;</code></li>
-                    <li>The bot checks that the user is in a voice channel.</li>
-                    <li>The bot ensures it has an active Player instance for the server (guild) or creates one using <code>player.createPlayer()</code>.</li>
-                    <li>Kazagumo queries the Lavalink server using <code>player.search(query, { requester })</code>. Lavalink handles the backend URL resolution and metadata extraction.</li>
-                    <li>The resolved tracks are loaded:
-                        <ul>
-                            <li>If a playlist is found, all tracks are added to the player's queue.</li>
-                            <li>If a single track is found, the top result is added to the queue.</li>
-                            <li>YouTube Shorts URLs are automatically converted.</li>
-                        </ul>
-                    </li>
-                    <li>Lavalink streams the audio directly to Discord's voice servers, ensuring latency-free, high-quality audio that doesn't burden the host machine.</li>
-                </ol>
-
-                <h3>Interactive Embed Controller</h3>
-                <p>When a song starts playing, Snax sends an interactive Now Playing/Queue embed. It includes:</p>
-                <ul>
-                    <li>Song title (hyperlinked to original source), duration, and status indicators.</li>
-                    <li>Thumbnail (when enabled in config).</li>
-                    <li>List of up next tracks (collapsible queue list).</li>
-                    <li>Integrated media control buttons:
-                        <ul>
-                            <li>⏯️ (Play/Pause) — Toggles track pausing.</li>
-                            <li>⏭️ (Skip) — Skips the current track.</li>
-                            <li>⏹️ (Stop) — Clears queue, stops player, and disconnects.</li>
-                            <li>🔼 / 🔽 (More/Less) — Expands/collapses queue details (default up to 10 vs 3).</li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <h3>Supported Audio Sources</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Source</th><th>Support Level</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>YouTube (URL/Search)</td><td>Full — handled by Lavalink node</td></tr>
-                        <tr><td>SoundCloud</td><td>Full — handled by Lavalink node</td></tr>
-                        <tr><td>Spotify</td><td>Full — metadata matching → streams YouTube audio</td></tr>
-                        <tr><td>Apple Music</td><td>Full — metadata matching → streams YouTube audio</td></tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Events -->
-            <section class="doc-section reveal" id="events">
-                <h2>Event Reference</h2>
-
-                <h3>Discord Client Events (events/)</h3>
-                <table class="data-table">
-                    <thead><tr><th>Event</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>messageCreate</td><td>Main command dispatcher. Handles prefix/mention triggers, anti-spam checks, permission validation, and command execution.</td></tr>
-                        <tr><td>interactionCreate</td><td>Handles slash (/) commands (for music) and component interactions (buttons, dropdowns, modals). Routes to the appropriate handlers based on customId.</td></tr>
-                        <tr><td>guildCreate</td><td>Creates the private snax-log channel upon joining a server.</td></tr>
-                        <tr><td>ready</td><td>Runs on login. Fetches client application owner info.</td></tr>
-                    </tbody>
-                </table>
-
-                <h3>Kazagumo Player Events (lavalink_music/events/)</h3>
-                <table class="data-table">
-                    <thead><tr><th>Event</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>playerStart</td><td>Fires when a new track begins playback. Sends the main queue controller embed and action buttons.</td></tr>
-                        <tr><td>playerEmpty</td><td>Fires when the queue ends; handles empty queue channel alerts.</td></tr>
-                        <tr><td>error</td><td>Logs Lavalink player and connection errors.</td></tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Utility Modules -->
-            <section class="doc-section reveal" id="utils">
-                <h2>Utility Modules</h2>
-
-                <h3>utils/permissions.js</h3>
-                <table class="data-table">
-                    <thead><tr><th>Function / Property</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>hasPermission(message, commandName)</td><td>Checks if the user is allowed to run a command.</td></tr>
-                        <tr><td>hasGroup(message, groupName)</td><td>Checks if user holds a specific permission group.</td></tr>
-                        <tr><td>isBotOwner(message)</td><td>Bypasses checks if author is the Bot Owner.</td></tr>
-                        <tr><td>addTarget / removeTarget</td><td>Adds or removes a user/role from a group. For AdminExe, handles 10-minute pending delay.</td></tr>
-                        <tr><td>checkManagerHierarchy</td><td>Enforces Manager hierarchy roles.</td></tr>
-                        <tr><td>getGuildPrefix / setGuildPrefix</td><td>Manages custom guild prefix overrides.</td></tr>
-                    </tbody>
-                </table>
-
-                <h3>utils/antiSpam.js</h3>
-                <p>Monitors user message frequency with auto-warning and 2-minute timeouts.</p>
-
-                <h3>utils/serverLogger.js</h3>
-                <p>Creates and writes server logs to the private `#snax-log` channel.</p>
-
-                <h3>utils/logger.js</h3>
-                <p>Custom terminal logger with color codes (success/warn/error).</p>
-
-                <h3>utils/voiceCheck.js</h3>
-                <p>Checks if user and bot are in voice channels together before music playback.</p>
-
-                <h3>utils/slashDeploy.js</h3>
-                <p><code>deploySlashCommands(client)</code>: Dynamically registers the 13 music commands as slash commands globally.</p>
-            </section>
-
-            <!-- Adding Commands -->
-            <section class="doc-section reveal" id="adding-commands">
-                <h2>Adding New Commands</h2>
-                <p>Snax uses a dynamic command loader — adding a command requires only creating a new file. No manual registration is needed.</p>
-
-                <ol class="step-list">
-                    <li>Create a new <code>.js</code> file in the <code>commands/</code> directory (or <code>lavalink_music/commands/</code> for music commands).</li>
-                    <li>
-                        Export an object with at minimum:
-                        <pre><code>module.exports = {
-  name: 'mycommand',             // REQUIRED — command trigger name (lowercase)
-  aliases: ['mc', 'mycmd'],      // OPTIONAL — alternative trigger names
-  description: 'Does a thing',   // OPTIONAL — shown in help
-  async execute(message, args, client, player, config) {
-    // Your command logic here
-    message.reply('Hello!');
-  }
-};</code></pre>
-                    </li>
-                    <li>Restart the bot. The <code>commandHandler</code> will automatically detect and load the file.</li>
-                    <li>To make the command require a permission group, add the command name to the appropriate group in the <code>COMMAND_GROUPS</code> object inside <code>utils/permissions.js</code>. If not listed in any group, it will default to <strong>OwnerOnly</strong>.</li>
-                </ol>
-            </section>
-
-            <!-- Dependencies -->
-            <section class="doc-section reveal" id="dependencies">
-                <h2>Dependencies</h2>
-                <table class="data-table">
-                    <thead><tr><th>Package</th><th>Version</th><th>Purpose</th></tr></thead>
-                    <tbody>
-                        <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord API wrapper</td></tr>
-                        <tr><td>dotenv</td><td>^17.4.2</td><td>Loads .env variables</td></tr>
-                        <tr><td>kazagumo</td><td>^3.4.3</td><td>Lavalink node manager &amp; queue wrapper</td></tr>
-                        <tr><td>shoukaku</td><td>^4.3.0</td><td>Lavalink node connector library</td></tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Known Limitations -->
-            <section class="doc-section reveal" id="limitations">
-                <h2>Known Notes &amp; Limitations</h2>
-
-                <h3>Pending AdminExe</h3>
-                <p>AdminExe grants have a mandatory 10-minute delay before taking effect. This is intentional and cannot be bypassed (except by Server/Bot Owners).</p>
-
-                <h3>Purge Age Limit</h3>
-                <p>Discord's API does not allow bulk-deleting messages older than 14 days.</p>
-
-                <h3>Bot Privileged Intents</h3>
-                <p>Ensure Message Content, Server Members, and Voice State intents are enabled in the Discord Developer Portal under bot settings.</p>
-
-                <h3>Local Data Storage</h3>
-                <p>Guild permissions are stored in <code>data/permissions.json</code> on the local host.</p>
-            </section>
-
-            <!-- Recent Updates -->
-            <section class="doc-section reveal" id="recent-updates">
-                <h2>Recent Updates (Version 1.1.0)</h2>
-                <p>The following features, optimizations, and bug fixes were introduced in Version 1.1.0:</p>
-                <ul>
-                    <li><strong>New Command: <code>$remnick</code></strong> — Added to the nickname group (<code>setNickExe</code>). Resets the nickname of the bot or the mentioned user back to their default username.</li>
-                    <li><strong>New Command: <code>$fetch</code></strong> — Added to the admin group (<code>AdminExe</code>). Queries the bot permissions assigned directly to a user/role or inherited via roles. Returns <code>! Dev !</code> if the query target is the owner defined in the <code>.env</code> file.</li>
-                    <li><strong>Robust Exe Assignments</strong> — Refactored all 16 permission management commands to support both user/role mentions and raw IDs, resolving members dynamically from the Discord API.</li>
-                    <li><strong>Proactive Role Hierarchy Warnings</strong> — Added startup and server-join checks that post a warning in <code>#snax-log</code> if the bot's role is below other roles in the server hierarchy, prompting administrators to drag it to the top.</li>
-                    <li><strong>Non-Music Bug Fixes</strong>:
-                        <ul>
-                            <li>Moved anti-spam checks to only monitor command executions rather than general messages in the server.</li>
-                            <li>Capped the purge command message fetch limit to prevent RangeErrors when fetching exactly 100 messages.</li>
-                            <li>Added hierarchy validation checks to the timeout command.</li>
-                            <li>Fixed requester VC validation upon target acceptance in dragreq.</li>
-                            <li>Fixed setnick role check when targeting the bot itself.</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-        </main>
+                <!-- Troubleshooting & FAQ -->
+                <section class="doc-section reveal" id="musico-faq">
+                    <h2>Troubleshooting &amp; FAQ</h2>
+                    <p><strong>Q: Why is my AdminExe candidate pending?</strong><br>A: This is a security delay. Cooldown runs for 10 minutes. The candidate gets full permissions upon executing a command after the cooldown expires.</p>
+                    <p><strong>Q: Verification HIGH/STRICT mode does not assign roles or channels.</strong><br>A: Ensure the bot role has "Manage Channels" and "Manage Roles" enabled. The bot's role hierarchy must sit above the role configured to be assigned to verified members.</p>
+                </section>
+            </main>
+        </div>
     </div>
 
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-brand">
-                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
-                <h2>SNAX</h2>
+                <img src="logo.jpg" alt="SMX Logo" class="logo-img">
+                <h2>SMX</h2>
             </div>
             <div class="footer-links">
                 <a href="commands.html">Commands</a>

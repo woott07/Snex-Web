@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SNAX | Discord Bot</title>
-    <meta name="description" content="SNAX is a high-performance, enterprise-grade management bot for Discord.">
+    <title>Team SMX | Discord Bots</title>
+    <meta name="description" content="Team SMX designs premium, secure, and high-performance Discord bots including Snax and Musico.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,43 +12,83 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-container">
-                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
-                <span class="logo">SNAX</span>
+                <img src="logo.jpg" alt="SMX Logo" class="logo-img">
+                <span class="logo">SMX</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="commands.html">Commands</a></li>
                 <li><a href="documentation.html">Documentation</a></li>
-                <li><a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="nav-btn">Add to Discord</a></li>
+                <li><a href="https://discord.gg/rMasx9HgJJ" target="_blank" class="nav-btn">Join Server</a></li>
             </ul>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-content">
-            <img src="logo.jpg" alt="Snax Bot" class="load-reveal-1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            <h1 class="load-reveal-2">Welcome to SNAX</h1>
-            <p class="load-reveal-3">Advanced Role-Based Moderation. Lightning-Fast Music. Unbeatable Anti-Spam. Built for scale.</p>
-            <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn-primary load-pop">
-                Add to Server
-            </a>
-        </div>
+    <header class="hub-header">
+        <h1 class="load-reveal-1">Powering Your Discord</h1>
+        <p class="load-reveal-2">Two advanced bots engineered for the ultimate Discord experience. Meet <strong>Snax</strong> and <strong>Musico</strong>.</p>
     </header>
 
+    <div class="hero-split">
+        <!-- Snax Card -->
+        <div class="bot-card bot-card-snax load-reveal-3">
+            <img src="logo.jpg" alt="Snax Bot Logo" class="bot-icon">
+            <h2>SNAX <span class="badge badge-snax">Music</span></h2>
+            <p class="bot-tagline">High-Performance Lavalink Music Player</p>
+            <ul class="bot-features-list">
+                <li>High-fidelity audio decoding via Lavalink</li>
+                <li>Fully interactive playback embed controller</li>
+                <li>Autoplay mode for non-stop streaming</li>
+                <li>Smart rolling-window anti-spam protection</li>
+                <li>Dedicated Private Audit Log channel</li>
+            </ul>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+                <a href="https://discord.com/oauth2/authorize?client_id=1479181184696193154&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn-primary btn-snax">
+                    Add Snax to Discord
+                </a>
+                <a href="commands.html#snax" style="font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--accent-snax); margin-top:0.5rem; display:inline-block;">View Snax Commands →</a>
+            </div>
+        </div>
+
+        <!-- Musico Card -->
+        <div class="bot-card bot-card-musico load-reveal-3">
+            <img src="logo.jpg" alt="Musico Bot Logo" class="bot-icon">
+            <h2>MUSICO <span class="badge badge-musico">Security</span></h2>
+            <p class="bot-tagline">Granular Moderation &amp; Member Onboarding</p>
+            <ul class="bot-features-list">
+                <li>Role-Based Access Control (RBAC) database</li>
+                <li>5-tier custom onboarding verification workflows</li>
+                <li>10-minute AdminExe promotion delay queue</li>
+                <li>Command execution anti-spam protection</li>
+                <li>Nickname control &amp; Voice channel moderation</li>
+            </ul>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+                <a href="https://discord.com/oauth2/authorize?client_id=1466430209019351050&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn-primary btn-musico">
+                    Add Musico to Discord
+                </a>
+                <a href="commands.html#musico" style="font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--accent-musico); margin-top:0.5rem; display:inline-block;">View Musico Commands →</a>
+            </div>
+        </div>
+    </div>
+
     <section id="features" class="section">
-        <h2 class="section-title reveal">Capabilities</h2>
+        <h2 class="section-title reveal">Key Pillars</h2>
         <div class="features-grid">
             <div class="feature-card reveal">
-                <h3>Enterprise RBAC</h3>
-                <p>Assign highly specific granular permissions instead of granting raw Discord admin rights. Distribute Voice and Chat powers safely.</p>
+                <h3>Lavalink Audio Engine <span class="badge badge-snax">Snax Only</span></h3>
+                <p>Offloads heavy decoding tasks to a high-speed Lavalink server. Supports crystal-clear voice streaming from Spotify, YouTube, SoundCloud, and Apple Music without server lag.</p>
             </div>
             <div class="feature-card reveal">
-                <h3>Anti-Spam</h3>
-                <p>A high-performance rolling-window filter automatically warns and times out spammers. Total immunity available for VIPs.</p>
+                <h3>Granular RBAC System <span class="badge badge-musico">Musico Only</span></h3>
+                <p>Enforces local Role-Based Access Control database permissions (VoiceExe, ChatExe, ManagerExe, AdminExe). Managers can allocate moderation rights without risking full Server Administrator overrides.</p>
             </div>
             <div class="feature-card reveal">
-                <h3>Audio</h3>
-                <p>Lag-free music powered by Lavalink (via Kazagumo &amp; Shoukaku). Full support for YouTube, Spotify, SoundCloud, and Apple Music.</p>
+                <h3>Interactive Onboarding <span class="badge badge-musico">Musico Only</span></h3>
+                <p>Build custom verification channels with button agreement logic, private text verification chat rooms, and automated rule questionnaires with staff approve/deny panel features.</p>
+            </div>
+            <div class="feature-card reveal">
+                <h3>Rolling-Window Anti-Spam <span class="badge" style="background:rgba(0,0,0,0.05); color:var(--text-main); border:1px solid var(--border-color);">Shared</span></h3>
+                <p>Smart rate limiters monitoring commands inside a rolling 10-second window. Issues clean warnings and triggers automatic 2-minute Discord user timeouts to block command floods.</p>
             </div>
         </div>
     </section>
@@ -56,8 +96,8 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-brand">
-                <img src="logo.jpg" alt="Snax Logo" class="logo-img">
-                <h2>SNAX</h2>
+                <img src="logo.jpg" alt="SMX Logo" class="logo-img">
+                <h2>SMX</h2>
             </div>
             <div class="footer-links">
                 <a href="commands.html">Commands</a>

@@ -1,0 +1,157 @@
+================================================================================
+SNAX DISCORD BOT: COMPREHENSIVE TECHNICAL & USER DOCUMENTATION
+================================================================================
+Date: June 26, 2026
+Project: Snax-Bot
+Status: Production-Ready (Lavalink Music Only)
+
+1. INTRODUCTION & OVERVIEW
+--------------------------------------------------------------------------------
+Snax is a high-performance, robust, and clean Discord music bot built on top of 
+Discord.js v14. It utilizes Lavalink (via the Kazagumo wrapper and Shoukaku 
+connector) to deliver ultra-low latency, crystal-clear audio streaming.
+
+By offloading audio decoding and streaming tasks to a dedicated Lavalink node, 
+Snax achieves maximum resource efficiency, stability, and zero stuttering, 
+even when playing large playlists.
+
+The bot supports hybrid controls: classic text-based commands (default prefix: $) 
+and modern Discord Application slash (/) commands.
+
+2. CORE FEATURES
+--------------------------------------------------------------------------------
+- High-Fidelity Audio: High-performance streaming powered by Lavalink.
+- Interactive Controller: Playback embeds feature direct button interactions
+  (Play/Pause, Skip, Loop, Autoplay, Stop).
+- Autoplay Mode: Automatically finds and queues up related tracks when the current
+  queue runs out, ensuring continuous music playback.
+- Anti-Spam Filter: Built-in rolling-window spam prevention protects command UIs
+  from flooding, automatically issuing warnings and 2-minute timeouts.
+- Secure Server Logs: Automatically creates a private, administrator-only 
+  #snax-log channel in servers to write execution errors and warnings.
+
+3. COMMAND REFERENCE
+--------------------------------------------------------------------------------
+Below is the list of available commands. All commands support prefix execution
+(e.g., $play) and slash commands (e.g., /play).
+
+- play (p):
+  Plays a song or playlist from a query or URL.
+  Usage: $play <song name / URL>
+
+- nowplaying (np):
+  Shows the progress and detailed metadata of the currently playing track.
+  Usage: $nowplaying
+
+- queue (q):
+  Displays the list of upcoming tracks currently in the queue.
+  Usage: $queue
+
+- volume (vol):
+  Checks or adjusts the music playback volume level (0-100).
+  Usage: $volume <0-100>
+
+- pause:
+  Pauses the audio playback.
+  Usage: $pause
+
+- resume:
+  Resumes the paused audio playback.
+  Usage: $resume
+
+- skip (s):
+  Skips the current song and plays the next in queue.
+  Usage: $skip
+
+- prev:
+  Plays the previously played track.
+  Usage: $prev
+
+- remove:
+  Removes a specific song from the queue by its queue number or title.
+  Usage: $remove <number / title>
+
+- clear:
+  Clears all upcoming songs from the queue.
+  Usage: $clear
+
+- shuffle:
+  Shuffles the order of the upcoming queue.
+  Usage: $shuffle
+
+- loop:
+  Loops the currently playing track.
+  Usage: $loop
+
+- loopQ:
+  Loops the entire queue.
+  Usage: $loopQ
+
+- autoplay (ap):
+  Toggles Autoplay mode on or off.
+  Usage: $autoplay
+
+- stop:
+  Stops the music player, clears the queue, and disconnects the bot from the VC.
+  Usage: $stop
+
+- join (j):
+  Summons the bot to join your active voice channel.
+  Usage: $join
+
+- leave (l):
+  Disconnects the bot from the voice channel.
+  Usage: $leave
+
+- help (h):
+  Displays the help menu with all available music commands.
+  Usage: $help
+
+4. PROJECT CODEBASE STRUCTURE
+--------------------------------------------------------------------------------
+Snax-Bot/
+├── index.js                  # App bootstrap and client login
+├── config/
+│   ├── config.json           # Default configuration settings
+│   ├── config.js             # Environment wrapper merging config with .env
+│   ├── slashOptionsMap.js    # Options layout for slash commands
+│   └── activity.json         # Status activity definitions
+├── lavalink_music/           # Music sub-system module
+│   ├── commands/             # Music commands executable scripts
+│   ├── events/               # Lavalink Node and player event listeners
+│   ├── embeds.js             # UI Builders for playback cards
+│   ├── interaction.js        # Controller button interaction handlers
+│   └── player.js             # Connection config and player manager
+├── events/                   # Client-wide Discord events (messageCreate, ready, etc.)
+├── utils/                    # Core utilities
+│   ├── antiSpam.js           # rolling-window spam prevention algorithm
+│   ├── serverLogger.js       # Log channel helper
+│   ├── globalLogger.js       # Home server log manager (for tracking bot state)
+│   ├── logger.js             # Colorized terminal logging utilities
+│   ├── slashDeploy.js        # Slash commands publisher API
+│   └── voiceCheck.js         # Voice channel states validator
+├── install.bat               # 1-click Windows installer script
+└── setup_mac.sh              # 1-click macOS/Linux installation script
+
+5. SETUP & INSTALLATION
+--------------------------------------------------------------------------------
+1. Windows: Double-click install.bat
+   macOS / Linux: Run "bash setup_mac.sh" in terminal.
+2. Edit the generated .env file:
+   Bot_Token=YOUR_DISCORD_BOT_TOKEN
+   OWNER_ID=YOUR_USER_ID
+   LAVALINK_HOST=LAVALINK_NODE_IP_OR_HOST
+   LAVALINK_PORT=LAVALINK_NODE_PORT
+   LAVALINK_PASSWORD=LAVALINK_NODE_PASSWORD
+   LAVALINK_SECURE=LAVALINK_NODE_SSL_BOOL (true/false)
+3. Start the bot:
+   node index.js
+
+6. SPAM IMMUNITY & PRIVACY LOGGER
+--------------------------------------------------------------------------------
+- Spam Filter: Sends a warning at 4 messages/10 seconds, and times out for 
+  2 minutes at 7 messages/10 seconds. Server Owners, Bot Owner, and members
+  with Administrator or ManageGuild permissions are automatically immune.
+- #snax-log: A private text channel created on guild join, viewable only by 
+  Administrators and the bot, used for tracking errors and critical alerts.
+================================================================================

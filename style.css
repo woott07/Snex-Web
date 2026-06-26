@@ -2,7 +2,9 @@
     --bg-color: #FAFAFA;
     --text-main: #111111;
     --text-muted: #666666;
-    --accent: #FF3B30; /* Bold accent color if needed */
+    --accent: #FF3B30; /* Default accent */
+    --accent-snax: #D4869A; /* Soft Dusty Pink for Snax */
+    --accent-musico: #7AA0C2; /* Soft Slate Blue for Musico */
     --border-color: #E0E0E0;
     --surface: #FFFFFF;
 }
@@ -423,3 +425,252 @@ a:hover {
     .hero-content h1 { font-size: 3.5rem; }
     .nav-links { display: none; }
 }
+
+/* ============================================================================
+   MULTI-BOT SWITCHER & LAYOUT STYLES
+   ============================================================================ */
+
+/* Bot Tab Switcher */
+.bot-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+}
+
+.switcher-btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--surface);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    color: var(--text-muted);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+}
+
+.switcher-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    color: var(--text-main);
+    border-color: var(--text-main);
+}
+
+.switcher-btn.active {
+    color: #FFFFFF;
+}
+
+.switcher-btn.active[data-bot="snax"] {
+    border-color: var(--accent-snax);
+    background: var(--accent-snax);
+    box-shadow: 0 10px 20px rgba(212, 134, 154, 0.25);
+}
+
+.switcher-btn.active[data-bot="musico"] {
+    border-color: var(--accent-musico);
+    background: var(--accent-musico);
+    box-shadow: 0 10px 20px rgba(122, 160, 194, 0.25);
+}
+
+/* Badge styling */
+.badge {
+    display: inline-block;
+    padding: 0.2em 0.8em;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 50px;
+    vertical-align: middle;
+}
+
+.badge-snax {
+    background: rgba(212, 134, 154, 0.12);
+    color: var(--accent-snax);
+    border: 1px solid rgba(212, 134, 154, 0.2);
+}
+
+.badge-musico {
+    background: rgba(122, 160, 194, 0.12);
+    color: var(--accent-musico);
+    border: 1px solid rgba(122, 160, 194, 0.2);
+}
+
+/* Bot-specific views */
+.bot-view {
+    display: none;
+}
+
+.bot-view.active {
+    display: block;
+}
+
+/* Split Hero / Hub Layout */
+.hero-split {
+    display: flex;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 80px auto 0;
+    padding: 2rem 4rem 6rem;
+    align-items: stretch;
+}
+
+.bot-card {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.bot-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+}
+
+.bot-card-snax::before {
+    background: var(--accent-snax);
+}
+
+.bot-card-musico::before {
+    background: var(--accent-musico);
+}
+
+.bot-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.bot-card-snax:hover {
+    border-color: var(--accent-snax);
+}
+
+.bot-card-musico:hover {
+    border-color: var(--accent-musico);
+}
+
+.bot-card .bot-icon {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    background: var(--bg-color);
+}
+
+.bot-card h2 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.bot-card .bot-tagline {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.bot-card .bot-features-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 3.5rem;
+    width: 100%;
+    max-width: 320px;
+    flex-grow: 1;
+}
+
+.bot-card .bot-features-list li {
+    padding: 0.5rem 0;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    position: relative;
+    padding-left: 1.75rem;
+}
+
+.bot-card .bot-features-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.bot-card-snax .bot-features-list li::before {
+    color: var(--accent-snax);
+}
+
+.bot-card-musico .bot-features-list li::before {
+    color: var(--accent-musico);
+}
+
+.btn-snax {
+    background: transparent;
+    border: 2px solid var(--text-main);
+    color: var(--text-main);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-snax:hover {
+    background: var(--accent-snax);
+    border-color: var(--accent-snax);
+    color: #FFFFFF;
+    box-shadow: 0 15px 30px rgba(212, 134, 154, 0.3);
+}
+
+.btn-musico {
+    background: transparent;
+    border: 2px solid var(--text-main);
+    color: var(--text-main);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-musico:hover {
+    background: var(--accent-musico);
+    border-color: var(--accent-musico);
+    color: #FFFFFF;
+    box-shadow: 0 15px 30px rgba(122, 160, 194, 0.3);
+}
+
+.hub-header {
+    text-align: center;
+    padding-top: 140px;
+    padding-bottom: 0;
+}
+
+.hub-header h1 {
+    font-size: 5rem;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hub-header p {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+    .hero-split {
+        flex-direction: column;
+        padding: 2rem;
+        gap: 2.5rem;
+    }
+}
+

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let watermarksHTML = '';
     for (let i = 0; i < numWatermarks; i++) {
-        watermarksHTML += `<div class="bg-text">SNAX</div>`;
+        watermarksHTML += `<div class="bg-text">SMX</div>`;
     }
     bgTextContainer.innerHTML = watermarksHTML;
     bgContainer.appendChild(bgTextContainer);
@@ -37,11 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const textContainer = document.querySelector('.bg-text-container');
         
         if (pattern) {
-            // Pattern moves slightly with scroll
             pattern.style.transform = `translateY(${scrolled * 0.15}px)`;
         }
         if (textContainer) {
-            // Huge text container moves in opposite direction
             textContainer.style.transform = `translateY(${scrolled * -0.25}px) rotate(-5deg)`;
         }
     });
@@ -72,30 +70,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tab switching logic for Commands Section
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
+    // Bot switcher logic (SNAX vs MUSICO)
+    const switcherBtns = document.querySelectorAll('.switcher-btn');
+    const botViews = document.querySelectorAll('.bot-view');
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons and contents
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
+    if (switcherBtns.length > 0) {
+        switcherBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetBot = btn.getAttribute('data-bot');
+                
+                // Toggle active classes on switcher buttons
+                switcherBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Toggle active classes on views
+                botViews.forEach(view => {
+                    if (view.id === `${targetBot}-view`) {
+                        view.classList.add('active');
+                    } else {
+                        view.classList.remove('active');
+                    }
+                });
 
-            // Add active class to clicked button
-            btn.classList.add('active');
+                // Update background watermarks to reflect selected bot
+                const bgTexts = document.querySelectorAll('.bg-text');
+                bgTexts.forEach(txt => {
+                    txt.textContent = targetBot.toUpperCase();
+                });
 
-            // Show corresponding content
-            const targetId = btn.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+                // Re-run Intersection Observer checks for newly visible elements
+                const newlyVisibleReveals = document.querySelectorAll(`#${targetBot}-view .reveal`);
+                newlyVisibleReveals.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        el.classList.add('active');
+                    }
+                });
+            });
         });
-    });
+    }
 
-    // Smooth scrolling for anchor links
+    // Check URL hash for bot selection on load (e.g. #snax or #musico)
+    const handleHashSelector = () => {
+        const hash = window.location.hash.toLowerCase();
+        if (hash === '#snax' || hash === '#musico') {
+            const botName = hash.substring(1); // extract 'snax' or 'musico'
+            const targetBtn = document.querySelector(`.switcher-btn[data-bot="${botName}"]`);
+            if (targetBtn) {
+                targetBtn.click();
+            }
+        }
+    };
+
+    // Run on load and listen to changes
+    handleHashSelector();
+    window.addEventListener('hashchange', handleHashSelector);
+
+    // Smooth scrolling for anchor links (excluding bot switcher hashes)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        const href = anchor.getAttribute('href');
+        if (href === '#snax' || href === '#musico') return;
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
