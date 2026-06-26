@@ -729,11 +729,36 @@ a:hover {
     pointer-events: none;
     z-index: 1;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Hardware GPU Acceleration */
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-.bot-card:hover .card-bg-decoration {
-    opacity: 0.25;
-    transform: scale(1.08) rotate(3deg);
+/* Only run hover scaling/rotation on devices that support hovering pointer (e.g. desktop) */
+@media (hover: hover) {
+    .bot-card:hover .card-bg-decoration {
+        opacity: 0.25;
+        transform: scale(1.08) rotate(3deg) translate3d(0, 0, 0);
+    }
+}
+
+/* Responsive adjustments for mobile and tablets */
+@media (max-width: 768px) {
+    .card-bg-decoration {
+        width: 240px;
+        bottom: -40px;
+        right: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-bg-decoration {
+        width: 180px;
+        bottom: -30px;
+        right: -30px;
+    }
 }
 
 /* Elevate other card contents above the background decoration */
