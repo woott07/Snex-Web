@@ -227,6 +227,11 @@
                 <li><a href="documentation.html">Documentation</a></li>
                 <li><a href="https://discord.gg/rMasx9HgJJ" target="_blank" class="nav-btn">Join Server</a></li>
             </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -343,20 +348,22 @@ LAVALINK_PASSWORD=LAVALINK_NODE_PASSWORD
 LAVALINK_SECURE=true_OR_false</code></pre>
 
                     <h3>Runtime Settings (config/config.json)</h3>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>Field</th><th>Default</th><th>Description</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>prefix</td><td>"$"</td><td>Default prefix for text commands.</td></tr>
-                            <tr><td>defaultVolume</td><td>100</td><td>Starting volume scale (0-100).</td></tr>
-                            <tr><td>leaveOnEmpty</td><td>true</td><td>Leave VC when all other members disconnect.</td></tr>
-                            <tr><td>leaveOnEmptyCooldown</td><td>30000</td><td>Cooldown in ms before leaving empty VC.</td></tr>
-                            <tr><td>leaveOnEnd</td><td>false</td><td>Leave VC when the queue finishes.</td></tr>
-                            <tr><td>selfDeaf</td><td>true</td><td>Deafens the bot to reduce bandwidth.</td></tr>
-                            <tr><td>embed.color</td><td>"#5865F2"</td><td>Primary hex color used for rich embeds.</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Field</th><th>Default</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>prefix</td><td>"$"</td><td>Default prefix for text commands.</td></tr>
+                                <tr><td>defaultVolume</td><td>100</td><td>Starting volume scale (0-100).</td></tr>
+                                <tr><td>leaveOnEmpty</td><td>true</td><td>Leave VC when all other members disconnect.</td></tr>
+                                <tr><td>leaveOnEmptyCooldown</td><td>30000</td><td>Cooldown in ms before leaving empty VC.</td></tr>
+                                <tr><td>leaveOnEnd</td><td>false</td><td>Leave VC when the queue finishes.</td></tr>
+                                <tr><td>selfDeaf</td><td>true</td><td>Deafens the bot to reduce bandwidth.</td></tr>
+                                <tr><td>embed.color</td><td>"#5865F2"</td><td>Primary hex color used for rich embeds.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <!-- Music System -->
@@ -389,16 +396,18 @@ LAVALINK_SECURE=true_OR_false</code></pre>
                 <section class="doc-section reveal" id="snax-antispam">
                     <h2>Anti-Spam System</h2>
                     <p>An in-memory rolling 10-second window tracks message frequency. If a user exceeds threshold limits executing commands, the bot penalizes them.</p>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>User Tier</th><th>Warning (10s)</th><th>Timeout Penalty (10s)</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Normal User</td><td>4 commands</td><td>7 commands (2-minute timeout)</td></tr>
-                            <tr><td>BypassExe Holders</td><td>15 commands</td><td>20 commands (2-minute timeout)</td></tr>
-                            <tr><td>SupBypass / Admins / Owners</td><td>Immune</td><td>Immune (No limits applied)</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>User Tier</th><th>Warning (10s)</th><th>Timeout Penalty (10s)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Normal User</td><td>4 commands</td><td>7 commands (2-minute timeout)</td></tr>
+                                <tr><td>BypassExe Holders</td><td>15 commands</td><td>20 commands (2-minute timeout)</td></tr>
+                                <tr><td>SupBypass / Admins / Owners</td><td>Immune</td><td>Immune (No limits applied)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <!-- Event Reference -->
@@ -434,17 +443,19 @@ LAVALINK_SECURE=true_OR_false</code></pre>
                 <!-- Dependencies -->
                 <section class="doc-section reveal" id="snax-dependencies">
                     <h2>Dependencies</h2>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>Package</th><th>Required Version</th><th>Purpose</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord gateway API integration</td></tr>
-                            <tr><td>dotenv</td><td>^17.4.2</td><td>Loads variables from local .env environment</td></tr>
-                            <tr><td>kazagumo</td><td>^3.4.3</td><td>Lavalink queue controller &amp; track parser</td></tr>
-                            <tr><td>shoukaku</td><td>^4.3.0</td><td>Lavalink WebSocket wrapper connector</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Package</th><th>Required Version</th><th>Purpose</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>discord.js</td><td>^14.26.4</td><td>Core Discord gateway API integration</td></tr>
+                                <tr><td>dotenv</td><td>^17.4.2</td><td>Loads variables from local .env environment</td></tr>
+                                <tr><td>kazagumo</td><td>^3.4.3</td><td>Lavalink queue controller &amp; track parser</td></tr>
+                                <tr><td>shoukaku</td><td>^4.3.0</td><td>Lavalink WebSocket wrapper connector</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <!-- Notes & Limitations -->
@@ -588,19 +599,21 @@ HOME_SERVER_ID=YOUR_HOME_SERVER_ID</code></pre>
                     </ol>
 
                     <h3>Permission Groups &amp; Inheritance</h3>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>Group</th><th>Access Scope</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Default</td><td>General utilities (ping, help, hello).</td></tr>
-                            <tr><td>VoiceExe</td><td>Voice state modifications (mute, deafen, dragreq, addme).</td></tr>
-                            <tr><td>setNickExe</td><td>Nickname modifications (setnick, remnick).</td></tr>
-                            <tr><td>ChatExe</td><td>Local chat moderation (purge, timeout).</td></tr>
-                            <tr><td>ManagerExe</td><td>Bans, kicks, unbans. Can allocate lower permissions.</td></tr>
-                            <tr><td>AdminExe</td><td>Administrative configurations, prefixes, verification, promotions.</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Group</th><th>Access Scope</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Default</td><td>General utilities (ping, help, hello).</td></tr>
+                                <tr><td>VoiceExe</td><td>Voice state modifications (mute, deafen, dragreq, addme).</td></tr>
+                                <tr><td>setNickExe</td><td>Nickname modifications (setnick, remnick).</td></tr>
+                                <tr><td>ChatExe</td><td>Local chat moderation (purge, timeout).</td></tr>
+                                <tr><td>ManagerExe</td><td>Bans, kicks, unbans. Can allocate lower permissions.</td></tr>
+                                <tr><td>AdminExe</td><td>Administrative configurations, prefixes, verification, promotions.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <h3>Security Cooldown Delay (pendingAdminExe)</h3>
                     <p>To protect servers from rogue staff accounts, assigning a user or role to the <code>AdminExe</code> group does not grant permissions instantly. Instead:</p>
