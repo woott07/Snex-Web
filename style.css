@@ -718,6 +718,30 @@ a:hover {
     border-color: var(--accent-musico);
 }
 
+/* Decorative Card Background Graphic */
+.card-bg-decoration {
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 320px;
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bot-card:hover .card-bg-decoration {
+    opacity: 0.25;
+    transform: scale(1.08) rotate(3deg);
+}
+
+/* Elevate other card contents above the background decoration */
+.bot-card > *:not(.card-bg-decoration) {
+    position: relative;
+    z-index: 2;
+}
+
 .bot-card .bot-icon {
     width: 110px;
     height: 110px;
